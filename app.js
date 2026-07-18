@@ -332,3 +332,4 @@ function openChat(friend){
     .innerHTML = "";
 
 }
+console.log("Snap It loaded");
