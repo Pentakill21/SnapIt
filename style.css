@@ -51,6 +51,8 @@ main{
 
 
 
+
+
 /* CAMERA */
 
 
@@ -92,7 +94,9 @@ main{
 
 
 
-/* NAVIGATION */
+
+
+/* NAV */
 
 
 .bottomNav{
@@ -147,6 +151,8 @@ main{
 
 
 
+
+
 /* TITLES */
 
 
@@ -162,7 +168,9 @@ main{
 
 
 
-/* FRIEND LIST */
+
+
+/* FRIENDS */
 
 
 #friendList{
@@ -187,6 +195,8 @@ main{
 
 
 
+
+
 /* CHAT */
 
 
@@ -200,23 +210,15 @@ main{
 
     justify-content:center;
 
-    position:relative;
-
-}
-
-
-
-.chatHeader button:first-child{
-
-    position:absolute;
-
-    left:15px;
-
 }
 
 
 
 .chatHeader button{
+
+    position:absolute;
+
+    left:15px;
 
     background:none;
 
@@ -231,6 +233,10 @@ main{
 
 
 .friendNameButton{
+
+    background:none;
+
+    border:none;
 
     color:white;
 
@@ -258,15 +264,17 @@ main{
 
 
 
+
+
 .bubble{
 
-    max-width:70%;
+    max-width:75%;
 
     padding:12px 16px;
 
-    margin:5px;
-
     border-radius:22px;
+
+    margin:5px;
 
     font-size:16px;
 
@@ -276,9 +284,9 @@ main{
 
 .sent{
 
-    align-self:flex-end;
-
     background:#0a84ff;
+
+    align-self:flex-end;
 
 }
 
@@ -286,9 +294,9 @@ main{
 
 .received{
 
-    align-self:flex-start;
-
     background:#333;
+
+    align-self:flex-start;
 
 }
 
@@ -296,7 +304,9 @@ main{
 
 
 
-/* MESSAGE INPUT */
+
+
+/* MESSAGE BOX */
 
 
 .messageBar{
@@ -341,6 +351,14 @@ main{
 
 
 
+.messageBar input::placeholder{
+
+    color:#999;
+
+}
+
+
+
 .messageBar button{
 
     width:45px;
@@ -363,6 +381,8 @@ main{
 
 
 
+
+
 /* SEARCH */
 
 
@@ -380,11 +400,13 @@ main{
 
     color:white;
 
-    padding:0 20px;
+    padding:0 18px;
 
     font-size:16px;
 
 }
+
+
 
 
 
@@ -395,13 +417,13 @@ main{
 
 .profileHeader{
 
-    display:flex;
+    height:65px;
 
-    align-items:center;
+    display:flex;
 
     justify-content:center;
 
-    height:65px;
+    align-items:center;
 
 }
 
@@ -429,11 +451,11 @@ main{
 
     margin:30px;
 
-    background:#111;
+    padding:25px;
 
     border-radius:20px;
 
-    padding:25px;
+    background:#111;
 
 }
 
@@ -443,7 +465,7 @@ main{
 
     margin:30px;
 
-    padding:15px;
+    height:50px;
 
     border:none;
 
