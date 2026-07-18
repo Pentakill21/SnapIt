@@ -11,30 +11,63 @@ let currentFriend = "";
 let lastMessage = "";
 
 
-let chatMemory = {};
+
+let memories = {};
 
 
 
 let personalities = {
 
+
     Alex:{
-        vibe:"funny",
-        style:"casual"
+
+        type:"funny",
+
+        catchphrases:[
+            "bro 😂",
+            "no way 😭",
+            "that's wild"
+        ]
+
     },
+
 
     Sam:{
-        vibe:"supportive",
-        style:"calm"
+
+        type:"supportive",
+
+        catchphrases:[
+            "I get you",
+            "that makes sense",
+            "I'm listening"
+        ]
+
     },
+
 
     Jordan:{
-        vibe:"gamer",
-        style:"energetic"
+
+        type:"gamer",
+
+        catchphrases:[
+            "🔥",
+            "that's a W",
+            "no shot 😂"
+        ]
+
     },
 
+
     Taylor:{
-        vibe:"excited",
-        style:"positive"
+
+        type:"hype",
+
+        catchphrases:[
+            "LET'S GO 🔥",
+            "that's awesome",
+            "huge win"
+        ]
+
     }
 
 };
@@ -47,18 +80,28 @@ let personalities = {
 
 function hideScreens(){
 
-    document.getElementById("cameraScreen").classList.add("hidden");
 
-    document.getElementById("chatScreen").classList.add("hidden");
+    document.getElementById("cameraScreen")
+    .classList.add("hidden");
 
-    document.getElementById("searchScreen").classList.add("hidden");
 
-    document.getElementById("messageScreen").classList.add("hidden");
+    document.getElementById("chatScreen")
+    .classList.add("hidden");
 
-    document.getElementById("profileScreen").classList.add("hidden");
+
+    document.getElementById("searchScreen")
+    .classList.add("hidden");
+
+
+    document.getElementById("messageScreen")
+    .classList.add("hidden");
+
+
+    document.getElementById("profileScreen")
+    .classList.add("hidden");
+
 
 }
-
 
 
 
@@ -68,10 +111,13 @@ function hideScreens(){
 
 function openCamera(){
 
+
     hideScreens();
+
 
     document.getElementById("cameraScreen")
     .classList.remove("hidden");
+
 
 }
 
@@ -81,14 +127,19 @@ function openCamera(){
 
 
 
+
 function openChatList(){
 
+
     hideScreens();
+
 
     document.getElementById("chatScreen")
     .classList.remove("hidden");
 
+
     loadFriends();
+
 
 }
 
@@ -106,6 +157,7 @@ function loadFriends(){
     document.getElementById("friendList");
 
 
+
     list.innerHTML="";
 
 
@@ -121,14 +173,15 @@ function loadFriends(){
         item.className="friend";
 
 
-
         item.innerText=friend;
 
 
 
         item.onclick=function(){
 
+
             openChat(friend);
+
 
         };
 
@@ -172,7 +225,9 @@ function searchPeople(){
 
 
     let name =
-    document.getElementById("searchBox").value.trim();
+    document.getElementById("searchBox")
+    .value
+    .trim();
 
 
 
@@ -185,7 +240,7 @@ function searchPeople(){
 
 
 
-    if(name.length > 0){
+    if(name.length>0){
 
 
         let button =
@@ -207,7 +262,21 @@ function searchPeople(){
                 friends.push(name);
 
 
+                personalities[name]={
+
+                    type:"friendly",
+
+                    catchphrases:[
+                        "cool!",
+                        "nice!",
+                        "tell me more"
+                    ]
+
+                };
+
+
             }
+
 
 
             loadFriends();
@@ -224,6 +293,7 @@ function searchPeople(){
 
 
 }
+
 
 
 
@@ -253,9 +323,11 @@ function openChat(friend){
 
 
 
-    if(!chatMemory[friend]){
+    if(!memories[friend]){
 
-        chatMemory[friend]=[];
+
+        memories[friend]=[];
+
 
     }
 
@@ -265,12 +337,13 @@ function openChat(friend){
     .innerHTML="";
 
 
-    chatMemory[friend].forEach(message=>{
+
+    memories[friend].forEach(msg=>{
 
 
-        addMessage(
-            message.text,
-            message.type
+        displayMessage(
+            msg.text,
+            msg.type
         );
 
 
@@ -303,7 +376,14 @@ function sendMessage(){
 
 
 
-    saveMessage(text,"sent");
+    rememberThings(text);
+
+
+
+    saveMessage(
+        text,
+        "sent"
+    );
 
 
 
@@ -327,15 +407,17 @@ function sendMessage(){
 function saveMessage(text,type){
 
 
-    if(!chatMemory[currentFriend]){
+    if(!memories[currentFriend]){
 
-        chatMemory[currentFriend]=[];
+
+        memories[currentFriend]=[];
+
 
     }
 
 
 
-    chatMemory[currentFriend].push({
+    memories[currentFriend].push({
 
         text:text,
 
@@ -345,7 +427,10 @@ function saveMessage(text,type){
 
 
 
-    addMessage(text,type);
+    displayMessage(
+        text,
+        type
+    );
 
 
 }
@@ -357,8 +442,7 @@ function saveMessage(text,type){
 
 
 
-
-function addMessage(text,type){
+function displayMessage(text,type){
 
 
     let box =
@@ -386,6 +470,91 @@ function addMessage(text,type){
 
     box.scrollTop =
     box.scrollHeight;
+
+
+}
+
+
+
+
+
+
+
+
+
+function rememberThings(message){
+
+
+    let text =
+    message.toLowerCase();
+
+
+
+    if(!memories[currentFriend]){
+
+
+        memories[currentFriend]=[];
+
+    }
+
+
+
+
+    if(
+        text.includes("my name is") ||
+        text.includes("i am ")
+    ){
+
+
+        memories[currentFriend].push({
+
+            text:"User shared personal information: "+message,
+
+            type:"memory"
+
+        });
+
+
+    }
+
+
+
+
+    if(
+        text.includes("love") ||
+        text.includes("like")
+    ){
+
+
+        memories[currentFriend].push({
+
+            text:"User likes something: "+message,
+
+            type:"memory"
+
+        });
+
+
+    }
+
+
+
+
+    if(
+        text.includes("favorite")
+    ){
+
+
+        memories[currentFriend].push({
+
+            text:"User favorite: "+message,
+
+            type:"memory"
+
+        });
+
+
+    }
 
 
 }
@@ -434,7 +603,7 @@ function friendReply(){
 
 
         let reply =
-        createAIReply(
+        createHumanReply(
             currentFriend,
             lastMessage
         );
@@ -461,8 +630,47 @@ function friendReply(){
 
 
 
-function createAIReply(friend,message){
+function findMemory(friend){
 
+
+    if(!memories[friend]){
+
+        return "";
+
+    }
+
+
+
+    let saved =
+    memories[friend]
+    .filter(
+        item=>item.type==="memory"
+    );
+
+
+
+    if(saved.length===0){
+
+        return "";
+
+    }
+
+
+
+    let random =
+    saved[
+        Math.floor(
+            Math.random()*saved.length
+        )
+    ];
+
+
+
+    return random.text;
+
+
+}
+function createHumanReply(friend,message){
 
 
     let text =
@@ -470,45 +678,36 @@ function createAIReply(friend,message){
 
 
 
-    let personality =
+    let person =
     personalities[friend];
 
 
 
-
-    if(text.includes("sad") ||
-       text.includes("upset") ||
-       text.includes("bad day") ||
-       text.includes("terrible") ||
-       text.includes("awful")){
+    let memory =
+    findMemory(friend);
 
 
-        if(personality.vibe==="funny"){
 
-            return "Dang 😭 what happened? Wanna talk about it?";
+
+
+
+    // remembers things
+
+    if(memory !== ""){
+
+
+        if(Math.random() > .5){
+
+
+            return (
+                "I remember you mentioned that before 👀 " +
+                "tell me more about it."
+            );
+
 
         }
 
 
-        return "I'm sorry 😕 I'm here. What happened?";
-
-
-    }
-
-
-
-
-
-
-
-    if(text.includes("happy") ||
-       text.includes("excited") ||
-       text.includes("awesome") ||
-       text.includes("amazing")){
-
-
-        return "Let's gooo 🔥 that's awesome! Tell me more.";
-
     }
 
 
@@ -518,19 +717,29 @@ function createAIReply(friend,message){
 
 
 
-    if(text.includes("game") ||
-       text.includes("gaming") ||
-       text.includes("play")){
+    // emotions
 
 
-        if(personality.vibe==="gamer"){
+    if(
+        text.includes("sad") ||
+        text.includes("hurt") ||
+        text.includes("bad") ||
+        text.includes("terrible") ||
+        text.includes("awful") ||
+        text.includes("stressed")
+    ){
 
-            return "YES 🎮 what game?";
+
+        if(person.type==="funny"){
+
+
+            return "Dang 😭 who ruined your day? I'm listening.";
+
 
         }
 
 
-        return "Nice 😂 sounds fun.";
+        return "I'm sorry 😕 want to talk about what happened?";
 
     }
 
@@ -541,27 +750,24 @@ function createAIReply(friend,message){
 
 
 
-    if(text.includes("school") ||
-       text.includes("class") ||
-       text.includes("homework")){
+    if(
+        text.includes("happy") ||
+        text.includes("excited") ||
+        text.includes("awesome") ||
+        text.includes("won")
+    ){
 
 
-        return "School can be stressful sometimes 😭 how was your day?";
-
-    }
+        if(person.type==="hype"){
 
 
+            return "LET'S GOOOO 🔥 that's actually awesome!";
 
 
+        }
 
 
-
-
-    if(text.includes("friend") ||
-       text.includes("friends")){
-
-
-        return "Friends can be complicated sometimes. What happened?";
+        return "That's great 😎 what happened?";
 
     }
 
@@ -572,10 +778,47 @@ function createAIReply(friend,message){
 
 
 
-    if(text.includes("?")){
+    // games
 
 
-        return "Hmm 🤔 good question. What do you think?";
+    if(
+        text.includes("game") ||
+        text.includes("gaming") ||
+        text.includes("play")
+    ){
+
+
+        if(person.type==="gamer"){
+
+
+            return "NO WAY 🎮 what game? Is it actually good?";
+
+
+        }
+
+
+        return "That sounds fun 😂";
+
+    }
+
+
+
+
+
+
+
+
+    // school
+
+
+    if(
+        text.includes("school") ||
+        text.includes("class") ||
+        text.includes("test")
+    ){
+
+
+        return "School can be a lot 😭 how did it go?";
 
     }
 
@@ -586,21 +829,15 @@ function createAIReply(friend,message){
 
 
 
-    if(personality.vibe==="funny"){
+    // questions
 
 
-        return "LOL 😂 tell me more";
-
-    }
-
-
+    if(
+        text.includes("?")
+    ){
 
 
-
-    if(personality.vibe==="supportive"){
-
-
-        return "I get you. I'm listening.";
+        return "Hmm 🤔 that's a good question. What do you think?";
 
     }
 
@@ -608,10 +845,40 @@ function createAIReply(friend,message){
 
 
 
-    if(personality.vibe==="gamer"){
 
 
-        return "Interesting 👀";
+
+    // personality endings
+
+
+    if(person.type==="funny"){
+
+
+        return (
+            person.catchphrases[
+                Math.floor(
+                    Math.random() *
+                    person.catchphrases.length
+                )
+            ]
+            +
+            " 😂 tell me more"
+        );
+
+
+    }
+
+
+
+
+    if(person.type==="supportive"){
+
+
+        return (
+            "I get you. " +
+            "I'm here if you want to talk."
+        );
+
 
     }
 
@@ -619,10 +886,14 @@ function createAIReply(friend,message){
 
 
 
-    if(personality.vibe==="excited"){
+    if(person.type==="gamer"){
 
 
-        return "No way 🔥 that's cool!";
+        return (
+            "Interesting 👀 " +
+            "that's a W honestly."
+        );
+
 
     }
 
@@ -630,7 +901,21 @@ function createAIReply(friend,message){
 
 
 
-    return "I hear you. Keep going.";
+    if(person.type==="hype"){
+
+
+        return (
+            "🔥 That's actually cool. " +
+            "Tell me everything."
+        );
+
+
+    }
+
+
+
+
+    return "Tell me more 👀";
 
 }
 
@@ -672,7 +957,6 @@ function openProfile(){
 
 
 
-
 function backToChat(){
 
 
@@ -704,8 +988,14 @@ function unaddFriend(){
 
         friends =
         friends.filter(
-            friend=>friend!==currentFriend
+            person =>
+            person !== currentFriend
         );
+
+
+
+        delete memories[currentFriend];
+
 
 
         openChatList();
@@ -713,9 +1003,7 @@ function unaddFriend(){
 
     }
 
-
 }
-
 
 
 
@@ -730,7 +1018,6 @@ function takePhoto(){
     console.log("Snap!");
 
 }
-
 
 
 
