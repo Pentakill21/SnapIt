@@ -8,11 +8,11 @@ let friends = [
 
 let currentFriend = "";
 
-let lastMessage = "";
+
+let conversationMemory = {};
 
 
-
-let memories = {};
+let chatHistory = {};
 
 
 
@@ -21,56 +21,77 @@ let personalities = {
 
     Alex:{
 
-        type:"funny",
+        style:"funny",
 
-        catchphrases:[
+        phrases:[
+
             "bro 😂",
+
             "no way 😭",
-            "that's wild"
+
+            "that's actually crazy"
+
         ]
 
     },
+
 
 
     Sam:{
 
-        type:"supportive",
+        style:"supportive",
 
-        catchphrases:[
+        phrases:[
+
             "I get you",
+
             "that makes sense",
+
             "I'm listening"
+
         ]
 
     },
+
 
 
     Jordan:{
 
-        type:"gamer",
+        style:"gamer",
 
-        catchphrases:[
-            "🔥",
-            "that's a W",
-            "no shot 😂"
+        phrases:[
+
+            "that's a W 🔥",
+
+            "no shot 😂",
+
+            "big move"
+
         ]
 
     },
 
 
+
     Taylor:{
 
-        type:"hype",
+        style:"hype",
 
-        catchphrases:[
+        phrases:[
+
             "LET'S GO 🔥",
+
             "that's awesome",
+
             "huge win"
+
         ]
 
     }
 
+
 };
+
 
 
 
@@ -102,6 +123,7 @@ function hideScreens(){
 
 
 }
+
 
 
 
@@ -155,7 +177,6 @@ function loadFriends(){
 
     let list =
     document.getElementById("friendList");
-
 
 
     list.innerHTML="";
@@ -240,7 +261,7 @@ function searchPeople(){
 
 
 
-    if(name.length>0){
+    if(name.length > 0){
 
 
         let button =
@@ -262,14 +283,21 @@ function searchPeople(){
                 friends.push(name);
 
 
+
                 personalities[name]={
 
-                    type:"friendly",
 
-                    catchphrases:[
-                        "cool!",
-                        "nice!",
-                        "tell me more"
+                    style:"friendly",
+
+
+                    phrases:[
+
+                        "that's cool",
+
+                        "tell me more",
+
+                        "interesting"
+
                     ]
 
                 };
@@ -301,7 +329,6 @@ function searchPeople(){
 
 
 
-
 function openChat(friend){
 
 
@@ -323,10 +350,20 @@ function openChat(friend){
 
 
 
-    if(!memories[friend]){
+    if(!chatHistory[friend]){
 
 
-        memories[friend]=[];
+        chatHistory[friend]=[];
+
+
+    }
+
+
+
+    if(!conversationMemory[friend]){
+
+
+        conversationMemory[friend]=[];
 
 
     }
@@ -338,12 +375,15 @@ function openChat(friend){
 
 
 
-    memories[friend].forEach(msg=>{
+    chatHistory[friend].forEach(message=>{
 
 
-        displayMessage(
-            msg.text,
-            msg.type
+        addMessage(
+
+            message.text,
+
+            message.type
+
         );
 
 
@@ -372,17 +412,16 @@ function sendMessage(){
 
 
 
-    lastMessage=text;
-
-
-
-    rememberThings(text);
-
-
-
     saveMessage(
         text,
         "sent"
+    );
+
+
+
+    learnMemory(
+        currentFriend,
+        text
     );
 
 
@@ -407,17 +446,16 @@ function sendMessage(){
 function saveMessage(text,type){
 
 
-    if(!memories[currentFriend]){
+    if(!chatHistory[currentFriend]){
 
 
-        memories[currentFriend]=[];
-
+        chatHistory[currentFriend]=[];
 
     }
 
 
 
-    memories[currentFriend].push({
+    chatHistory[currentFriend].push({
 
         text:text,
 
@@ -427,7 +465,7 @@ function saveMessage(text,type){
 
 
 
-    displayMessage(
+    addMessage(
         text,
         type
     );
@@ -442,7 +480,8 @@ function saveMessage(text,type){
 
 
 
-function displayMessage(text,type){
+
+function addMessage(text,type){
 
 
     let box =
@@ -482,79 +521,56 @@ function displayMessage(text,type){
 
 
 
-function rememberThings(message){
+function learnMemory(friend,text){
 
 
-    let text =
-    message.toLowerCase();
-
-
-
-    if(!memories[currentFriend]){
-
-
-        memories[currentFriend]=[];
-
-    }
+    let lower =
+    text.toLowerCase();
 
 
 
+    if(!conversationMemory[friend]){
 
-    if(
-        text.includes("my name is") ||
-        text.includes("i am ")
-    ){
-
-
-        memories[currentFriend].push({
-
-            text:"User shared personal information: "+message,
-
-            type:"memory"
-
-        });
-
+        conversationMemory[friend]=[];
 
     }
 
 
 
 
-    if(
-        text.includes("love") ||
-        text.includes("like")
-    ){
+
+    let facts = [
+
+        "i like",
+
+        "i love",
+
+        "my favorite",
+
+        "my name is",
+
+        "i play",
+
+        "i have"
+
+    ];
 
 
-        memories[currentFriend].push({
 
-            text:"User likes something: "+message,
-
-            type:"memory"
-
-        });
+    facts.forEach(fact=>{
 
 
-    }
+        if(lower.includes(fact)){
 
 
+            conversationMemory[friend]
+            .push(text);
 
 
-    if(
-        text.includes("favorite")
-    ){
+        }
 
 
-        memories[currentFriend].push({
-
-            text:"User favorite: "+message,
-
-            type:"memory"
-
-        });
-
-
-    }
+    });
 
 
 }
@@ -580,7 +596,8 @@ function friendReply(){
 
 
 
-    typing.innerText="...";
+    typing.innerText =
+    "...";
 
 
 
@@ -590,8 +607,9 @@ function friendReply(){
 
 
 
-    let delay =
-    Math.floor(Math.random()*3000)+1500;
+
+    let wait =
+    Math.floor(Math.random()*3000)+2000;
 
 
 
@@ -602,22 +620,25 @@ function friendReply(){
 
 
 
-        let reply =
-        createHumanReply(
+        let response =
+        generateReply(
             currentFriend,
-            lastMessage
+            getLastUserMessage()
         );
 
 
 
         saveMessage(
-            reply,
+
+            response,
+
             "received"
+
         );
 
 
 
-    },delay);
+    },wait);
 
 
 }
@@ -630,26 +651,15 @@ function friendReply(){
 
 
 
-function findMemory(friend){
+function getLastUserMessage(){
 
 
-    if(!memories[friend]){
-
-        return "";
-
-    }
+    let history =
+    chatHistory[currentFriend];
 
 
 
-    let saved =
-    memories[friend]
-    .filter(
-        item=>item.type==="memory"
-    );
-
-
-
-    if(saved.length===0){
+    if(!history){
 
         return "";
 
@@ -657,20 +667,65 @@ function findMemory(friend){
 
 
 
-    let random =
-    saved[
+    for(
+        let i=history.length-1;
+        i>=0;
+        i--
+    ){
+
+
+        if(history[i].type==="sent"){
+
+
+            return history[i].text;
+
+
+        }
+
+
+    }
+
+
+
+    return "";
+
+
+}
+
+
+
+
+
+
+
+
+
+function getMemory(friend){
+
+
+    if(
+        !conversationMemory[friend] ||
+        conversationMemory[friend].length===0
+    ){
+
+        return "";
+
+    }
+
+
+
+    return conversationMemory[friend][
+
         Math.floor(
-            Math.random()*saved.length
+            Math.random() *
+            conversationMemory[friend].length
         )
+
     ];
 
 
-
-    return random.text;
-
-
 }
-function createHumanReply(friend,message){
+function generateReply(friend,message){
 
 
     let text =
@@ -684,33 +739,26 @@ function createHumanReply(friend,message){
 
 
     let memory =
-    findMemory(friend);
+    getMemory(friend);
 
 
 
 
 
+    // remembers past things
 
-    // remembers things
+    if(
+        memory !== "" &&
+        Math.random() > 0.45
+    ){
 
-    if(memory !== ""){
-
-
-        if(Math.random() > .5){
-
-
-            return (
-                "I remember you mentioned that before 👀 " +
-                "tell me more about it."
-            );
-
-
-        }
-
+        return (
+            "I remember you said \"" +
+            memory +
+            "\" 👀"
+        );
 
     }
-
-
 
 
 
@@ -722,24 +770,22 @@ function createHumanReply(friend,message){
 
     if(
         text.includes("sad") ||
-        text.includes("hurt") ||
-        text.includes("bad") ||
-        text.includes("terrible") ||
-        text.includes("awful") ||
-        text.includes("stressed")
+        text.includes("upset") ||
+        text.includes("angry") ||
+        text.includes("stressed") ||
+        text.includes("bad day")
     ){
 
 
-        if(person.type==="funny"){
+        if(person.style==="funny"){
 
-
-            return "Dang 😭 who ruined your day? I'm listening.";
-
+            return "Dang 😭 who messed up your day? What happened?";
 
         }
 
 
-        return "I'm sorry 😕 want to talk about what happened?";
+        return "I'm sorry 😕 I'm here. Wanna talk about it?";
+
 
     }
 
@@ -750,24 +796,26 @@ function createHumanReply(friend,message){
 
 
 
+    // happy moments
+
+
     if(
-        text.includes("happy") ||
-        text.includes("excited") ||
+        text.includes("won") ||
+        text.includes("new") ||
         text.includes("awesome") ||
-        text.includes("won")
+        text.includes("excited")
     ){
 
 
-        if(person.type==="hype"){
+        if(person.style==="hype"){
 
-
-            return "LET'S GOOOO 🔥 that's actually awesome!";
-
+            return "WAIT 🔥🔥 that's actually amazing!!";
 
         }
 
 
-        return "That's great 😎 what happened?";
+        return "That's awesome 😎 tell me what happened!";
+
 
     }
 
@@ -788,11 +836,9 @@ function createHumanReply(friend,message){
     ){
 
 
-        if(person.type==="gamer"){
+        if(person.style==="gamer"){
 
-
-            return "NO WAY 🎮 what game? Is it actually good?";
-
+            return "NO SHOT 🎮 what game are you playing?";
 
         }
 
@@ -808,36 +854,14 @@ function createHumanReply(friend,message){
 
 
 
-    // school
-
-
-    if(
-        text.includes("school") ||
-        text.includes("class") ||
-        text.includes("test")
-    ){
-
-
-        return "School can be a lot 😭 how did it go?";
-
-    }
-
-
-
-
-
-
-
-
     // questions
 
 
-    if(
-        text.includes("?")
-    ){
+    if(text.includes("?")){
 
 
-        return "Hmm 🤔 that's a good question. What do you think?";
+        return "Hmm 🤔 I think that's interesting. What do you think?";
+
 
     }
 
@@ -848,21 +872,25 @@ function createHumanReply(friend,message){
 
 
 
-    // personality endings
+    // personality responses
 
 
-    if(person.type==="funny"){
+    if(person.style==="funny"){
 
 
         return (
-            person.catchphrases[
+
+            person.phrases[
                 Math.floor(
                     Math.random() *
-                    person.catchphrases.length
+                    person.phrases.length
                 )
             ]
+
             +
-            " 😂 tell me more"
+
+            " tell me more 😂"
+
         );
 
 
@@ -871,12 +899,17 @@ function createHumanReply(friend,message){
 
 
 
-    if(person.type==="supportive"){
+
+
+    if(person.style==="supportive"){
 
 
         return (
+
             "I get you. " +
-            "I'm here if you want to talk."
+
+            "What happened next?"
+
         );
 
 
@@ -886,12 +919,16 @@ function createHumanReply(friend,message){
 
 
 
-    if(person.type==="gamer"){
+
+    if(person.style==="gamer"){
 
 
         return (
-            "Interesting 👀 " +
-            "that's a W honestly."
+
+            "That's actually interesting 🔥 " +
+
+            "what happened?"
+
         );
 
 
@@ -901,12 +938,16 @@ function createHumanReply(friend,message){
 
 
 
-    if(person.type==="hype"){
+
+    if(person.style==="hype"){
 
 
         return (
-            "🔥 That's actually cool. " +
-            "Tell me everything."
+
+            "🔥 That's awesome. " +
+
+            "I need the full story!"
+
         );
 
 
@@ -915,7 +956,9 @@ function createHumanReply(friend,message){
 
 
 
-    return "Tell me more 👀";
+
+
+    return "Interesting 👀 keep going.";
 
 }
 
@@ -957,6 +1000,7 @@ function openProfile(){
 
 
 
+
 function backToChat(){
 
 
@@ -976,14 +1020,14 @@ function backToChat(){
 function unaddFriend(){
 
 
-    let answer =
+    let confirmRemove =
     confirm(
         "Unadd " + currentFriend + "?"
     );
 
 
 
-    if(answer){
+    if(confirmRemove){
 
 
         friends =
@@ -994,7 +1038,9 @@ function unaddFriend(){
 
 
 
-        delete memories[currentFriend];
+        delete chatHistory[currentFriend];
+
+        delete conversationMemory[currentFriend];
 
 
 
@@ -1003,7 +1049,9 @@ function unaddFriend(){
 
     }
 
+
 }
+
 
 
 
@@ -1015,9 +1063,11 @@ function unaddFriend(){
 function takePhoto(){
 
 
-    console.log("Snap!");
+    console.log("SnapIt photo");
+
 
 }
+
 
 
 
