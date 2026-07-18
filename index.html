@@ -20,7 +20,7 @@
 <div class="app">
 
 
-<!-- CAMERA -->
+<!-- CAMERA SCREEN -->
 
 <main id="cameraScreen">
 
@@ -29,6 +29,62 @@
 
 
 <button class="shutter" onclick="takePhoto()"></button>
+
+
+
+<div class="bottomNav">
+
+<button onclick="openChatList()">
+
+<svg viewBox="0 0 24 24">
+<path d="M3 10.5L12 3l9 7.5v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
+</svg>
+
+</button>
+
+
+
+<button onclick="openCamera()">
+
+<svg viewBox="0 0 24 24">
+<rect x="4" y="6" width="16" height="14" rx="3"/>
+<circle cx="12" cy="13" r="4"/>
+<path d="M8 6l1.5-3h5L16 6"/>
+</svg>
+
+</button>
+
+
+
+<button onclick="openSearch()">
+
+<svg viewBox="0 0 24 24">
+<circle cx="10" cy="10" r="6"/>
+<line x1="14.5" y1="14.5" x2="21" y2="21"/>
+</svg>
+
+</button>
+
+</div>
+
+
+</main>
+
+
+
+
+
+<!-- FRIEND LIST -->
+
+<main id="chatScreen" class="hidden">
+
+
+<h1 class="title">
+Chats
+</h1>
+
+
+<div id="friendList"></div>
 
 
 
@@ -74,41 +130,9 @@
 
 
 
-<!-- FRIEND LIST -->
-
-
-<main id="chatScreen" class="hidden">
-
-
-<h1 class="title">
-Chat
-</h1>
-
-
-<div id="friendList"></div>
-
-
-
-<div class="bottomNav">
-
-<button onclick="openChatList()">🏠</button>
-
-<button onclick="openCamera()">📷</button>
-
-<button onclick="openSearch()">🔍</button>
-
-</div>
-
-
-</main>
-
-
-
-
 
 
 <!-- SEARCH -->
-
 
 <main id="searchScreen" class="hidden">
 
@@ -118,24 +142,49 @@ Search
 </h1>
 
 
-<input 
-id="searchBox"
+<input id="searchBox"
 placeholder="Search people..."
-oninput="searchPeople()"
->
+oninput="searchPeople()">
+
 
 
 <div id="searchResults"></div>
 
 
 
+
 <div class="bottomNav">
 
-<button onclick="openChatList()">🏠</button>
 
-<button onclick="openCamera()">📷</button>
+<button onclick="openChatList()">
 
-<button onclick="openSearch()">🔍</button>
+<svg viewBox="0 0 24 24">
+<path d="M3 10.5L12 3l9 7.5v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
+</svg>
+
+</button>
+
+
+<button onclick="openCamera()">
+
+<svg viewBox="0 0 24 24">
+<rect x="4" y="6" width="16" height="14" rx="3"/>
+<circle cx="12" cy="13" r="4"/>
+<path d="M8 6l1.5-3h5L16 6"/>
+</svg>
+
+</button>
+
+
+<button onclick="openSearch()">
+
+<svg viewBox="0 0 24 24">
+<circle cx="10" cy="10" r="6"/>
+<line x1="14.5" y1="14.5" x2="21" y2="21"/>
+</svg>
+
+</button>
+
 
 </div>
 
@@ -150,7 +199,6 @@ oninput="searchPeople()"
 
 <!-- CHAT -->
 
-
 <main id="messageScreen" class="hidden">
 
 
@@ -164,14 +212,20 @@ oninput="searchPeople()"
 
 <button class="friendNameButton" onclick="openProfile()">
 
-<h1 id="chatName">
-Chat
-</h1>
+<span id="chatName">
+Friend
+</span>
+
+<span>
+>
+</span>
+
 
 </button>
 
 
 </div>
+
 
 
 
@@ -183,10 +237,9 @@ Chat
 <form class="messageBar" onsubmit="sendMessage(); return false;">
 
 
-<input 
-id="messageInput"
-placeholder="Message..."
->
+<input id="messageInput"
+placeholder="Message...">
+
 
 
 <button type="submit">
@@ -195,7 +248,6 @@ placeholder="Message..."
 
 
 </form>
-
 
 
 </main>
@@ -214,6 +266,7 @@ placeholder="Message..."
 
 <div class="profileHeader">
 
+
 <button onclick="backToChat()">
 ←
 </button>
@@ -228,16 +281,21 @@ Profile
 
 
 
-<div class="profileStats">
+<div class="profileCard">
 
 
-<p>SnapIt member: 8 months</p>
+<h2 id="profileFriendName">
+Friend
+</h2>
 
-<p>🔥 Streak: 42 days</p>
 
-<p>📸 Snaps sent: 1,283</p>
+<p>⭐ SnapIt member: 6 months</p>
 
-<p>💬 Messages: 5,921</p>
+<p>🔥 Streak: 37 days</p>
+
+<p>📸 Snaps sent: 1,842</p>
+
+<p>💬 Messages: 6,420</p>
 
 
 </div>
