@@ -3,160 +3,203 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 body {
+
     margin: 0;
-    background: #000;
+    background: black;
     color: white;
+    overflow: hidden;
+
 }
+
+
 
 .app {
+
     width: 100%;
-    max-width: 430px;
     height: 100vh;
-    margin: auto;
-    background: #050505;
-    overflow: hidden;
+    background: black;
+
 }
 
-header {
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    border-bottom: 1px solid #222;
-}
-
-header h1 {
-    font-size: 28px;
-    margin: 0;
-}
-
-header button {
-    background: white;
-    border: none;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    font-size: 20px;
-}
 
 
 main {
+
+    width: 100%;
+    height: 100vh;
+
+}
+
+
+
+
+
+/* CAMERA */
+
+
+#cameraScreen {
+
+    position: relative;
+    background: black;
+
+}
+
+
+
+#cameraView {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+
+
+
+
+/* BIG SNAPCHAT STYLE BUTTON */
+
+
+.shutter {
+
+    position: absolute;
+
+    bottom: 115px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 6px solid #ddd;
+
+}
+
+
+
+
+
+/* BOTTOM ICON BAR */
+
+
+.bottomNav {
+
+    position: absolute;
+
+    bottom: 25px;
+
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: center;
+
+}
+
+
+
+.bottomNav button {
+
+    background: transparent;
+
+    border: none;
+
+    color: white;
+
+    font-size: 32px;
+
+    width: 60px;
+
+    height: 60px;
+
+}
+
+
+
+
+
+/* CHAT */
+
+
+.title {
+
+    text-align: center;
+
+    font-size: 32px;
+
+    margin-top: 30px;
+
+}
+
+
+
+#friendList {
+
     padding: 20px;
+
 }
 
-
-h2 {
-    margin-top: 0;
-}
 
 
 .friend {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    margin-bottom: 12px;
+
     background: #111;
-    border-radius: 18px;
-    cursor: pointer;
-    transition: .2s;
-}
 
-.friend:hover {
-    transform: scale(1.02);
-    background: #191919;
-}
+    padding: 18px;
 
+    margin-bottom: 12px;
 
-.avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    background: #222;
+    border-radius: 20px;
+
+    font-size: 20px;
+
 }
 
 
-.friend h3 {
-    margin: 0 0 5px;
+
+
+
+/* SEARCH */
+
+
+#searchBox {
+
+    display: block;
+
+    width: 85%;
+
+    margin: 30px auto;
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    border: none;
+
+    font-size: 18px;
+
 }
 
-.friend p {
-    margin: 0;
-    color: #aaa;
-}
+
+
 
 
 .hidden {
+
     display: none;
-}
 
-
-#messages {
-    height: 65vh;
-    overflow-y: auto;
-    padding: 10px 0;
-}
-
-
-.message {
-    max-width: 75%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 18px;
-}
-
-
-.ai {
-    background: #222;
-    margin-right: auto;
-}
-
-
-.user {
-    background: white;
-    color: black;
-    margin-left: auto;
-}
-
-
-.inputArea {
-    display: flex;
-    gap: 10px;
-}
-
-
-.inputArea input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 20px;
-    border: none;
-    outline: none;
-}
-
-
-.inputArea button {
-    border: none;
-    border-radius: 20px;
-    padding: 0 18px;
-    background: white;
-}
-#cameraScreen {
-    position: fixed;
-    inset: 0;
-    background: black;
-    z-index: 10;
-    padding: 20px;
-}
-
-#cameraView {
-    width: 100%;
-    height: 75vh;
-    object-fit: cover;
-    border-radius: 20px;
 }
