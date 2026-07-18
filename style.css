@@ -15,10 +15,9 @@ body{
 
     color:white;
 
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 
 }
-
 
 
 .app{
@@ -28,19 +27,17 @@ body{
 }
 
 
-
 main{
 
     height:100vh;
+
+    background:#000;
 
     display:flex;
 
     flex-direction:column;
 
-    background:#000;
-
 }
-
 
 
 .hidden{
@@ -116,14 +113,11 @@ main{
 }
 
 
-
 .bottomNav button{
 
     background:none;
 
     border:none;
-
-    padding:5px;
 
 }
 
@@ -153,6 +147,7 @@ main{
 
 
 
+
 /* TITLES */
 
 
@@ -170,6 +165,7 @@ main{
 
 
 
+
 /* FRIENDS */
 
 
@@ -178,7 +174,6 @@ main{
     padding:20px;
 
 }
-
 
 
 .friend{
@@ -197,12 +192,15 @@ main{
 
 
 
-/* CHAT */
+
+/* CHAT HEADER */
 
 
 .chatHeader{
 
     height:65px;
+
+    position:relative;
 
     display:flex;
 
@@ -214,7 +212,7 @@ main{
 
 
 
-.chatHeader button{
+.chatHeader > button:first-child{
 
     position:absolute;
 
@@ -234,6 +232,12 @@ main{
 
 .friendNameButton{
 
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
     background:none;
 
     border:none;
@@ -242,10 +246,18 @@ main{
 
     font-size:22px;
 
+    font-weight:bold;
+
 }
 
 
 
+
+
+
+
+
+/* MESSAGES */
 
 
 #messages{
@@ -261,7 +273,6 @@ main{
     flex-direction:column;
 
 }
-
 
 
 
@@ -306,7 +317,8 @@ main{
 
 
 
-/* MESSAGE BOX */
+
+/* MESSAGE BAR */
 
 
 .messageBar{
@@ -346,14 +358,6 @@ main{
     padding:0 18px;
 
     font-size:16px;
-
-}
-
-
-
-.messageBar input::placeholder{
-
-    color:#999;
 
 }
 
@@ -412,6 +416,7 @@ main{
 
 
 
+
 /* PROFILE */
 
 
@@ -424,6 +429,8 @@ main{
     justify-content:center;
 
     align-items:center;
+
+    position:relative;
 
 }
 
@@ -453,9 +460,9 @@ main{
 
     padding:25px;
 
-    border-radius:20px;
-
     background:#111;
+
+    border-radius:20px;
 
 }
 
@@ -467,9 +474,9 @@ main{
 
     height:50px;
 
-    border:none;
-
     border-radius:25px;
+
+    border:none;
 
     background:red;
 
