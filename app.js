@@ -1,7 +1,7 @@
 let cameraStream = null;
 let usingFrontCamera = true;
 
-
+alert("Snap It loaded");
 const friends = [
     "Emma",
     "Jake",
