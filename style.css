@@ -311,11 +311,14 @@ align-self:flex-start;
 /* MESSAGE BOX */
 
 
+/* MESSAGE BOX */
+
+
 .messageBar{
 
 position:fixed;
 
-bottom:15px;
+bottom:85px;
 
 left:50%;
 
@@ -327,8 +330,61 @@ display:flex;
 
 gap:10px;
 
+z-index:10;
+
 }
 
+
+
+.messageBar input{
+
+flex:1;
+
+height:45px;
+
+border-radius:25px;
+
+border:none;
+
+background:#222;
+
+color:white;
+
+padding:0 18px;
+
+font-size:16px;
+
+}
+
+
+
+.messageBar button{
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+border:none;
+
+background:#0a84ff;
+
+color:white;
+
+font-size:20px;
+
+}
+
+
+
+/* keeps chat above the navigation */
+
+#messages{
+
+padding-bottom:160px;
+
+}
 
 
 .messageBar input{
