@@ -11,23 +11,30 @@ let currentFriend = "";
 let lastMessage = "";
 
 
+let chatMemory = {};
+
+
 
 let personalities = {
 
     Alex:{
-        style:"funny"
+        vibe:"funny",
+        style:"casual"
     },
 
     Sam:{
-        style:"chill"
+        vibe:"supportive",
+        style:"calm"
     },
 
     Jordan:{
-        style:"gamer"
+        vibe:"gamer",
+        style:"energetic"
     },
 
     Taylor:{
-        style:"energetic"
+        vibe:"excited",
+        style:"positive"
     }
 
 };
@@ -41,12 +48,18 @@ let personalities = {
 function hideScreens(){
 
     document.getElementById("cameraScreen").classList.add("hidden");
+
     document.getElementById("chatScreen").classList.add("hidden");
+
     document.getElementById("searchScreen").classList.add("hidden");
+
     document.getElementById("messageScreen").classList.add("hidden");
+
     document.getElementById("profileScreen").classList.add("hidden");
 
 }
+
+
 
 
 
@@ -61,6 +74,7 @@ function openCamera(){
     .classList.remove("hidden");
 
 }
+
 
 
 
@@ -83,13 +97,17 @@ function openChatList(){
 
 
 
+
+
 function loadFriends(){
+
 
     let list =
     document.getElementById("friendList");
 
 
     list.innerHTML="";
+
 
 
     friends.forEach(friend=>{
@@ -99,10 +117,13 @@ function loadFriends(){
         document.createElement("div");
 
 
+
         item.className="friend";
 
 
+
         item.innerText=friend;
+
 
 
         item.onclick=function(){
@@ -110,6 +131,7 @@ function loadFriends(){
             openChat(friend);
 
         };
+
 
 
         list.appendChild(item);
@@ -126,12 +148,16 @@ function loadFriends(){
 
 
 
+
 function openSearch(){
+
 
     hideScreens();
 
+
     document.getElementById("searchScreen")
     .classList.remove("hidden");
+
 
 }
 
@@ -141,24 +167,30 @@ function openSearch(){
 
 
 
+
 function searchPeople(){
 
+
     let name =
-    document.getElementById("searchBox").value;
+    document.getElementById("searchBox").value.trim();
+
 
 
     let results =
     document.getElementById("searchResults");
 
 
+
     results.innerHTML="";
 
 
-    if(name.length>0){
+
+    if(name.length > 0){
 
 
         let button =
         document.createElement("button");
+
 
 
         button.innerText =
@@ -168,21 +200,28 @@ function searchPeople(){
 
         button.onclick=function(){
 
+
             if(!friends.includes(name)){
 
+
                 friends.push(name);
+
 
             }
 
 
             loadFriends();
 
+
         };
+
 
 
         results.appendChild(button);
 
+
     }
+
 
 }
 
@@ -195,59 +234,122 @@ function searchPeople(){
 
 function openChat(friend){
 
+
     hideScreens();
+
 
 
     document.getElementById("messageScreen")
     .classList.remove("hidden");
 
 
+
     currentFriend=friend;
+
 
 
     document.getElementById("chatName")
     .innerText=friend;
 
 
+
+    if(!chatMemory[friend]){
+
+        chatMemory[friend]=[];
+
+    }
+
+
+
     document.getElementById("messages")
     .innerHTML="";
 
+
+    chatMemory[friend].forEach(message=>{
+
+
+        addMessage(
+            message.text,
+            message.type
+        );
+
+
+    });
+
+
 }
-
-
-
-
-
-
-
-
 function sendMessage(){
+
 
     let input =
     document.getElementById("messageInput");
+
 
 
     let text =
     input.value.trim();
 
 
+
     if(text===""){
+
         return;
+
     }
+
 
 
     lastMessage=text;
 
 
-    addMessage(text,"sent");
+
+    saveMessage(text,"sent");
+
 
 
     input.value="";
 
 
+
     friendReply();
 
+
 }
+
+
+
+
+
+
+
+
+
+function saveMessage(text,type){
+
+
+    if(!chatMemory[currentFriend]){
+
+        chatMemory[currentFriend]=[];
+
+    }
+
+
+
+    chatMemory[currentFriend].push({
+
+        text:text,
+
+        type:type
+
+    });
+
+
+
+    addMessage(text,type);
+
+
+}
+
 
 
 
@@ -263,24 +365,31 @@ function addMessage(text,type){
     document.getElementById("messages");
 
 
+
     let bubble =
     document.createElement("div");
+
 
 
     bubble.className =
     "bubble " + type;
 
 
+
     bubble.innerText=text;
+
 
 
     box.appendChild(bubble);
 
 
+
     box.scrollTop =
     box.scrollHeight;
 
+
 }
+
 
 
 
@@ -296,10 +405,14 @@ function friendReply(){
     document.createElement("div");
 
 
-    typing.className="bubble received";
+
+    typing.className =
+    "bubble received";
+
 
 
     typing.innerText="...";
+
 
 
     document.getElementById("messages")
@@ -309,7 +422,7 @@ function friendReply(){
 
 
     let delay =
-    Math.random()*2500+1500;
+    Math.floor(Math.random()*3000)+1500;
 
 
 
@@ -319,18 +432,23 @@ function friendReply(){
         typing.remove();
 
 
+
         let reply =
-        generateReply(
+        createAIReply(
             currentFriend,
             lastMessage
         );
 
 
-        addMessage(reply,"received");
+
+        saveMessage(
+            reply,
+            "received"
+        );
+
 
 
     },delay);
-
 
 
 }
@@ -343,7 +461,8 @@ function friendReply(){
 
 
 
-function generateReply(friend,message){
+function createAIReply(friend,message){
+
 
 
     let text =
@@ -351,75 +470,103 @@ function generateReply(friend,message){
 
 
 
-    let style =
-    personalities[friend]?.style;
+    let personality =
+    personalities[friend];
+
 
 
 
     if(text.includes("sad") ||
+       text.includes("upset") ||
        text.includes("bad day") ||
-       text.includes("upset")){
+       text.includes("terrible") ||
+       text.includes("awful")){
 
 
-        if(style==="funny")
-            return "Dang 😭 rough day? Want me to distract you?";
+        if(personality.vibe==="funny"){
+
+            return "Dang 😭 what happened? Wanna talk about it?";
+
+        }
 
 
-        return "I'm sorry 😕 wanna talk about what happened?";
+        return "I'm sorry 😕 I'm here. What happened?";
+
 
     }
+
+
+
 
 
 
 
     if(text.includes("happy") ||
+       text.includes("excited") ||
        text.includes("awesome") ||
        text.includes("amazing")){
 
 
-        return "Let's gooo 🔥 that's actually awesome!";
+        return "Let's gooo 🔥 that's awesome! Tell me more.";
 
     }
+
+
+
 
 
 
 
 
     if(text.includes("game") ||
-       text.includes("gaming")){
+       text.includes("gaming") ||
+       text.includes("play")){
 
 
-        if(style==="gamer")
-            return "YES 🎮 what game are you playing?";
+        if(personality.vibe==="gamer"){
+
+            return "YES 🎮 what game?";
+
+        }
 
 
-        return "Nice 😂 what are you playing?";
+        return "Nice 😂 sounds fun.";
 
     }
+
+
+
 
 
 
 
 
     if(text.includes("school") ||
-       text.includes("class")){
+       text.includes("class") ||
+       text.includes("homework")){
 
 
-        return "School can be crazy sometimes 😭 how was it?";
+        return "School can be stressful sometimes 😭 how was your day?";
+
+    }
+
+
+
+
+
+
+
+
+    if(text.includes("friend") ||
+       text.includes("friends")){
+
+
+        return "Friends can be complicated sometimes. What happened?";
 
     }
 
 
 
-
-
-    if(text.includes("food") ||
-       text.includes("eat")){
-
-
-        return "Now I'm hungry 😂 what did you eat?";
-
-    }
 
 
 
@@ -436,28 +583,54 @@ function generateReply(friend,message){
 
 
 
-    if(style==="funny"){
+
+
+
+    if(personality.vibe==="funny"){
+
 
         return "LOL 😂 tell me more";
 
     }
 
 
-    if(style==="chill"){
 
-        return "I get you. That makes sense.";
+
+
+    if(personality.vibe==="supportive"){
+
+
+        return "I get you. I'm listening.";
 
     }
 
 
-    if(style==="gamer"){
+
+
+
+    if(personality.vibe==="gamer"){
+
 
         return "Interesting 👀";
 
     }
 
 
-    return "No way 😂 keep going";
+
+
+
+    if(personality.vibe==="excited"){
+
+
+        return "No way 🔥 that's cool!";
+
+    }
+
+
+
+
+
+    return "I hear you. Keep going.";
 
 }
 
@@ -475,12 +648,15 @@ function openProfile(){
     hideScreens();
 
 
+
     document.getElementById("profileScreen")
     .classList.remove("hidden");
 
 
+
     document.getElementById("profileName")
     .innerText=currentFriend;
+
 
 
     document.getElementById("profileFriendName")
@@ -496,11 +672,15 @@ function openProfile(){
 
 
 
+
 function backToChat(){
+
 
     openChat(currentFriend);
 
+
 }
+
 
 
 
@@ -512,13 +692,14 @@ function backToChat(){
 function unaddFriend(){
 
 
-    let confirmDelete =
+    let answer =
     confirm(
         "Unadd " + currentFriend + "?"
     );
 
 
-    if(confirmDelete){
+
+    if(answer){
 
 
         friends =
@@ -529,9 +710,13 @@ function unaddFriend(){
 
         openChatList();
 
+
     }
 
+
 }
+
+
 
 
 
@@ -541,7 +726,8 @@ function unaddFriend(){
 
 function takePhoto(){
 
-    console.log("snap!");
+
+    console.log("Snap!");
 
 }
 
@@ -551,8 +737,12 @@ function takePhoto(){
 
 
 
+
+
 window.onload=function(){
 
+
     openCamera();
+
 
 };
