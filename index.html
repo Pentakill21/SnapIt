@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap It</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>Snap It</h1>
+        <button id="cameraButton">📸</button>
+    </header>
+
+    <main id="homeScreen">
+
+        <h2>AI Friends</h2>
+
+        <div class="friend" onclick="openChat('Luna')">
+            <div class="avatar luna">🌙</div>
+            <div>
+                <h3>Luna</h3>
+                <p>Hey, I missed talking to you.</p>
+            </div>
+        </div>
+
+        <div class="friend" onclick="openChat('Kai')">
+            <div class="avatar kai">⚡</div>
+            <div>
+                <h3>Kai</h3>
+                <p>You disappeared 👀</p>
+            </div>
+        </div>
+
+        <div class="friend" onclick="openChat('Nova')">
+            <div class="avatar nova">🔮</div>
+            <div>
+                <h3>Nova</h3>
+                <p>I have something interesting...</p>
+            </div>
+        </div>
+
+    </main>
+
+
+    <main id="chatScreen" class="hidden">
+
+        <button onclick="goHome()">← Back</button>
+
+        <h2 id="chatName"></h2>
+
+        <div id="messages"></div>
+
+        <div class="inputArea">
+            <input id="messageInput" placeholder="Message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
