@@ -2,167 +2,181 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Snap It</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Snap It</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 
 <body>
 
+
 <div class="app">
 
 
-    <!-- CAMERA SCREEN -->
+<!-- CAMERA -->
 
-    <main id="cameraScreen">
+<main id="cameraScreen">
 
-        <video id="cameraView" autoplay playsinline></video>
-
-
-        <button class="shutter" onclick="takePhoto()"></button>
+<video id="cameraView" autoplay playsinline></video>
 
 
-        <div class="bottomNav">
-
-            <button onclick="openChatList()">
-                🏠
-            </button>
+<button class="shutter" onclick="takePhoto()"></button>
 
 
-            <button onclick="openCamera()">
-                📷
-            </button>
+<div class="bottomNav">
+
+<button onclick="openChatList()">
+🏠
+</button>
 
 
-            <button onclick="openSearch()">
-                🔍
-            </button>
-
-        </div>
-
-    </main>
+<button onclick="openCamera()">
+📷
+</button>
 
 
+<button onclick="openSearch()">
+🔍
+</button>
 
 
-    <!-- CHAT SCREEN -->
+</div>
 
-    <main id="chatScreen" class="hidden">
-
-
-        <h1 class="title">
-            Chat
-        </h1>
-
-
-        <div id="friendList">
-
-        </div>
-
-
-
-        <div class="bottomNav">
-
-            <button onclick="openChatList()">
-                🏠
-            </button>
-
-
-            <button onclick="openCamera()">
-                📷
-            </button>
-
-
-            <button onclick="openSearch()">
-                🔍
-            </button>
-
-        </div>
-
-
-    </main>
+</main>
 
 
 
 
-<!-- MESSAGE SCREEN -->
 
-<main id="messageScreen" class="hidden">
+<!-- FRIEND LIST -->
 
-    <h1 id="chatName" class="title">
-        Chat
-    </h1>
+<main id="chatScreen" class="hidden">
 
 
-    <div id="messages">
-
-    </div>
-
-
-    <input 
-        id="messageInput"
-        placeholder="Message..."
-    >
+<h1 class="title">
+Chat
+</h1>
 
 
-    <button onclick="sendMessage()">
-        Send
-    </button>
+<div id="friendList">
+
+</div>
+
+
+
+<div class="bottomNav">
+
+
+<button onclick="openChatList()">
+🏠
+</button>
+
+
+<button onclick="openCamera()">
+📷
+</button>
+
+
+<button onclick="openSearch()">
+🔍
+</button>
+
+
+</div>
 
 
 </main>
-    <!-- SEARCH SCREEN -->
-
-    <main id="searchScreen" class="hidden">
-
-
-        <h1 class="title">
-            Search
-        </h1>
-
-
-
-        <input 
-            id="searchBox"
-            placeholder="Search people..."
-            oninput="searchPeople()"
-        >
-
-
-
-        <div id="searchResults">
-
-        </div>
 
 
 
 
-        <div class="bottomNav">
+
+<!-- SEARCH -->
+
+<main id="searchScreen" class="hidden">
 
 
-            <button onclick="openChatList()">
-                🏠
-            </button>
+<h1 class="title">
+Search
+</h1>
 
 
-            <button onclick="openCamera()">
-                📷
-            </button>
+<input 
+id="searchBox"
+placeholder="Search people..."
+oninput="searchPeople()"
+>
 
 
-            <button onclick="openSearch()">
-                🔍
-            </button>
+<div id="searchResults">
+
+</div>
 
 
-        </div>
 
 
-    </main>
+<div class="bottomNav">
+
+
+<button onclick="openChatList()">
+🏠
+</button>
+
+
+<button onclick="openCamera()">
+📷
+</button>
+
+
+<button onclick="openSearch()">
+🔍
+</button>
+
+
+</div>
+
+
+</main>
+
+
+
+
+
+<!-- CHAT WITH PERSON -->
+
+
+<main id="messageScreen" class="hidden">
+
+
+<h1 id="chatName" class="title">
+Chat
+</h1>
+
+
+<div id="messages">
+
+</div>
+
+
+<input 
+id="messageInput"
+placeholder="Message..."
+>
+
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+
+</main>
+
 
 
 </div>
