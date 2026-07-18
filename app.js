@@ -30,61 +30,6 @@ function openCamera(){
     document.getElementById("cameraScreen")
     .classList.remove("hidden");
 
-
-    startCamera();
-
-}
-
-
-
-async function startCamera(){
-
-    if(cameraStream){
-
-        cameraStream.getTracks().forEach(track=>{
-            track.stop();
-        });
-
-    }
-
-
-    try{
-
-        cameraStream =
-        await navigator.mediaDevices.getUserMedia({
-
-            video:{
-                facingMode:
-                usingFrontCamera ? "user" : "environment"
-            },
-
-            audio:false
-
-        });
-
-
-        document.getElementById("cameraView")
-        .srcObject = cameraStream;
-
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-    }
-
-}
-
-
-
-function flipCamera(){
-
-    usingFrontCamera = !usingFrontCamera;
-
-    startCamera();
-
 }
 
 
@@ -108,7 +53,7 @@ function loadFriends(){
     document.getElementById("friendList");
 
 
-    list.innerHTML = "";
+    list.innerHTML="";
 
 
     friends.forEach(friend=>{
@@ -118,13 +63,13 @@ function loadFriends(){
         document.createElement("div");
 
 
-        item.className = "friend";
+        item.className="friend";
 
 
-        item.innerText = friend;
+        item.innerText=friend;
 
 
-        item.onclick = function(){
+        item.onclick=function(){
 
             openChat(friend);
 
@@ -153,7 +98,7 @@ function openSearch(){
 
 function searchPeople(){
 
-    let box =
+    let name =
     document.getElementById("searchBox").value;
 
 
@@ -164,42 +109,28 @@ function searchPeople(){
     results.innerHTML="";
 
 
-    if(box.length === 0){
-        return;
-    }
+    if(name.length > 0){
+
+        let button =
+        document.createElement("button");
 
 
-    let button =
-    document.createElement("button");
+        button.innerText =
+        "Add " + name;
 
 
-    button.innerText =
-    "Add " + box;
+        button.onclick=function(){
+
+            friends.push(name);
+
+            loadFriends();
+
+        };
 
 
-    button.onclick=function(){
-
-        addFriend(box);
-
-    };
-
-
-    results.appendChild(button);
-
-}
-
-
-
-function addFriend(person){
-
-    if(!friends.includes(person)){
-
-        friends.push(person);
+        results.appendChild(button);
 
     }
-
-
-    loadFriends();
 
 }
 
@@ -221,13 +152,68 @@ function openChat(friend){
     .innerText = friend;
 
 
+    document.getElementById("messages")
+    .innerHTML="";
+
+}
+
+
+
+function sendMessage(){
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    let text =
+    input.value.trim();
+
+
+    if(text === ""){
+        return;
+    }
+
+
+    addMessage(text,"sent");
+
+
+    input.value="";
+
+}
+
+
+
+function addMessage(text,type){
+
+
+    let messages =
+    document.getElementById("messages");
+
+
+    let bubble =
+    document.createElement("div");
+
+
+    bubble.className =
+    "bubble " + type;
+
+
+    bubble.innerText=text;
+
+
+    messages.appendChild(bubble);
+
+
+    messages.scrollTop =
+    messages.scrollHeight;
+
 }
 
 
 
 function takePhoto(){
 
-    console.log("photo taken");
+    console.log("photo");
 
 }
 
