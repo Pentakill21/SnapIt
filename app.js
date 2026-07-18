@@ -1,6 +1,11 @@
+let cameraStream = null;
+let usingFrontCamera = true;
+
 let currentFriend = "";
 
+
 const responses = {
+
     Emma: [
         "I was wondering how your day was 😊",
         "Tell me what happened today.",
@@ -21,33 +26,49 @@ const responses = {
         "Tell me more about that.",
         "I like hearing your thoughts."
     ]
+
 };
+
 
 
 function openChat(friend) {
 
     currentFriend = friend;
 
-    document.getElementById("homeScreen").classList.add("hidden");
-    document.getElementById("chatScreen").classList.remove("hidden");
+    document.getElementById("homeScreen")
+    .classList.add("hidden");
 
-    document.getElementById("chatName").innerText = friend;
+    document.getElementById("chatScreen")
+    .classList.remove("hidden");
 
-    document.getElementById("messages").innerHTML = "";
+
+    document.getElementById("chatName")
+    .innerText = friend;
+
+
+    document.getElementById("messages")
+    .innerHTML = "";
+
 
     addMessage(
         "Hey! I'm " + friend + ". I'm happy to talk with you 😊",
         "ai"
     );
+
 }
+
 
 
 function goHome() {
 
-    document.getElementById("homeScreen").classList.remove("hidden");
-    document.getElementById("chatScreen").classList.add("hidden");
+    document.getElementById("homeScreen")
+    .classList.remove("hidden");
+
+    document.getElementById("chatScreen")
+    .classList.add("hidden");
 
 }
+
 
 
 function sendMessage() {
@@ -56,10 +77,12 @@ function sendMessage() {
 
     let text = input.value.trim();
 
-    if (text === "") return;
+
+    if(text === "") return;
 
 
     addMessage(text, "user");
+
 
     input.value = "";
 
@@ -68,12 +91,15 @@ function sendMessage() {
 
         let friendReplies = responses[currentFriend];
 
-        let reply = friendReplies[
+
+        let reply =
+        friendReplies[
             Math.floor(Math.random() * friendReplies.length)
         ];
 
 
         addMessage(reply, "ai");
+
 
     }, 900);
 
@@ -81,25 +107,37 @@ function sendMessage() {
 
 
 
-function addMessage(text, type) {
+
+function addMessage(text,type) {
 
     const box = document.getElementById("messages");
 
+
     const message = document.createElement("div");
+
 
     message.className = "message " + type;
 
+
     message.innerText = text;
 
+
     box.appendChild(message);
+
 
     box.scrollTop = box.scrollHeight;
 
 }
-let cameraStream = null;
+
+
+
+
+
+// CAMERA SYSTEM
 
 
 async function openCamera() {
+
 
     document.getElementById("homeScreen")
     .classList.add("hidden");
@@ -109,33 +147,24 @@ async function openCamera() {
     .classList.remove("hidden");
 
 
-    try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({
 
-        cameraStream = await navigator.mediaDevices.getUserMedia({
+        video:{
+            facingMode: usingFrontCamera
+            ? "user"
+            : "environment"
+        },
 
-            video: {
-                facingMode: "user"
-            },
+        audio:false
 
-            audio: false
-
-        });
-
-
-        const video = document.getElementById("cameraView");
-
-        video.srcObject = cameraStream;
+    });
 
 
-    } catch(error) {
-
-        alert("Camera permission is needed for Snap It 📸");
-
-        console.log(error);
-
-    }
+    document.getElementById("cameraView")
+    .srcObject = cameraStream;
 
 }
+
 
 
 
@@ -150,7 +179,7 @@ function closeCamera() {
     .classList.remove("hidden");
 
 
-    if(cameraStream) {
+    if(cameraStream){
 
         cameraStream.getTracks()
         .forEach(track => track.stop());
@@ -163,6 +192,44 @@ function closeCamera() {
 
 
 
+
+
+async function flipCamera() {
+
+
+    usingFrontCamera = !usingFrontCamera;
+
+
+    if(cameraStream){
+
+        cameraStream.getTracks()
+        .forEach(track => track.stop());
+
+    }
+
+
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+
+        video:{
+            facingMode: usingFrontCamera
+            ? "user"
+            : "environment"
+        },
+
+        audio:false
+
+    });
+
+
+    document.getElementById("cameraView")
+    .srcObject = cameraStream;
+
+}
+
+
+
+
+
 function takePhoto() {
 
     const video = document.getElementById("cameraView");
@@ -170,15 +237,16 @@ function takePhoto() {
 
     const canvas = document.createElement("canvas");
 
+
     canvas.width = video.videoWidth;
 
     canvas.height = video.videoHeight;
 
 
-    const context = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
 
 
-    context.drawImage(
+    ctx.drawImage(
         video,
         0,
         0,
@@ -187,6 +255,6 @@ function takePhoto() {
     );
 
 
-    alert("Photo captured! 📸");
+    alert("Photo captured 📸");
 
 }
