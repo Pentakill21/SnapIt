@@ -210,7 +210,13 @@ function loadFriends(){
         item.className="friend";
 
 
-        item.innerText=friend;
+       item.innerText = friend;
+
+item.onclick = function(){
+
+    openChat(friend);
+
+};
 
 
         list.appendChild(item);
