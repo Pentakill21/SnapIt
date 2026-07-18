@@ -1,0 +1,10 @@
+{
+  "name": "Snap It",
+  "short_name": "Snap It",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "description": "Your AI friends in one place."
+}
