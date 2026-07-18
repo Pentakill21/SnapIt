@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Snap It AI</title>
+<title>SnapIt</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -20,6 +20,9 @@
 <div class="app">
 
 
+
+<!-- CAMERA SCREEN -->
+
 <main id="cameraScreen">
 
 
@@ -30,10 +33,10 @@
 
 
 
-<div class="bottomNav">
+<nav class="bottomNav">
 
 
-<button onclick="openChatList()">
+<button onclick="openChatList()" aria-label="Chats">
 
 <svg viewBox="0 0 24 24">
 <path d="M3 10.5L12 3l9 7.5v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
@@ -43,7 +46,8 @@
 
 
 
-<button onclick="openCamera()">
+
+<button onclick="openCamera()" aria-label="Camera">
 
 <svg viewBox="0 0 24 24">
 <rect x="4" y="6" width="16" height="14" rx="3"/>
@@ -55,7 +59,9 @@
 
 
 
-<button onclick="openSearch()">
+
+
+<button onclick="openSearch()" aria-label="Search">
 
 <svg viewBox="0 0 24 24">
 <circle cx="10" cy="10" r="6"/>
@@ -65,13 +71,20 @@
 </button>
 
 
-</div>
+
+</nav>
 
 
 </main>
 
 
 
+
+
+
+
+
+<!-- CHAT LIST -->
 
 
 <main id="chatScreen" class="hidden">
@@ -85,25 +98,16 @@ Chats
 <div id="friendList"></div>
 
 
-
-<div class="bottomNav">
-
-
-<button onclick="openChatList()">🏠</button>
-
-<button onclick="openCamera()">📷</button>
-
-<button onclick="openSearch()">🔍</button>
-
-
-</div>
-
-
 </main>
 
 
 
 
+
+
+
+
+<!-- SEARCH -->
 
 
 <main id="searchScreen" class="hidden">
@@ -114,10 +118,12 @@ Search
 </h1>
 
 
-<input id="searchBox"
-placeholder="Search people..."
-oninput="searchPeople()">
 
+<input 
+id="searchBox"
+placeholder="Search people..."
+oninput="searchPeople()"
+>
 
 
 <div id="searchResults"></div>
@@ -130,10 +136,15 @@ oninput="searchPeople()">
 
 
 
+
+
+<!-- MESSAGE SCREEN -->
+
+
 <main id="messageScreen" class="hidden">
 
 
-<div class="chatHeader">
+<header class="chatHeader">
 
 
 <button onclick="openChatList()">
@@ -141,11 +152,14 @@ oninput="searchPeople()">
 </button>
 
 
+
 <button class="friendNameButton" onclick="openProfile()">
+
 
 <span id="chatName">
 Friend
 </span>
+
 
 <span>
 &gt;
@@ -155,7 +169,10 @@ Friend
 </button>
 
 
-</div>
+
+</header>
+
+
 
 
 
@@ -164,19 +181,27 @@ Friend
 
 
 
+
+
 <form class="messageBar" onsubmit="sendMessage();return false;">
 
 
-<input id="messageInput"
-placeholder="Message...">
+<input 
+id="messageInput"
+placeholder="Message..."
+>
 
 
-<button>
+
+<button type="submit">
+
 ➤
+
 </button>
 
 
 </form>
+
 
 
 </main>
@@ -188,15 +213,21 @@ placeholder="Message...">
 
 
 
+<!-- PROFILE SCREEN -->
+
+
 <main id="profileScreen" class="hidden">
 
 
-<div class="profileHeader">
+<header class="profileHeader">
 
 
 <button onclick="backToChat()">
+
 ←
+
 </button>
+
 
 
 <h1 id="profileName">
@@ -204,12 +235,14 @@ Profile
 </h1>
 
 
-</div>
+
+</header>
 
 
 
 
-<div class="profileCard">
+
+<section class="profileCard">
 
 
 <h2 id="profileFriendName">
@@ -217,16 +250,18 @@ Friend
 </h2>
 
 
-<p>⭐ SnapIt member: 9 months</p>
+<p>⭐ SnapIt member: 7 months</p>
 
-<p>🔥 Streak: 64 days</p>
+<p>🔥 Streak: 51 days</p>
 
-<p>📸 Snaps sent: 2,430</p>
+<p>📸 Snaps sent: 2,100</p>
 
-<p>💬 Messages: 8,902</p>
+<p>💬 Messages: 7,500</p>
 
 
-</div>
+
+</section>
+
 
 
 
@@ -240,6 +275,8 @@ UNADD FRIEND
 
 
 </main>
+
+
 
 
 
