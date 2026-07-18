@@ -1,4 +1,5 @@
 let cameraStream = null;
+let usingFrontCamera = true;
 
 
 const friends = [
@@ -44,6 +45,46 @@ window.onload = function(){
 
 
 async function openCamera(){
+
+    hideScreens();
+
+    document.getElementById("cameraScreen")
+    .classList.remove("hidden");
+
+
+    if(cameraStream){
+
+        cameraStream.getTracks().forEach(track => track.stop());
+
+    }
+
+
+    try {
+
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+
+            video:{
+                facingMode: usingFrontCamera ? "user" : "environment"
+            },
+
+            audio:false
+
+        });
+
+
+        document.getElementById("cameraView")
+        .srcObject = cameraStream;
+
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
 
     hideScreens();
 
