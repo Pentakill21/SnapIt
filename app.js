@@ -96,3 +96,97 @@ function addMessage(text, type) {
     box.scrollTop = box.scrollHeight;
 
 }
+let cameraStream = null;
+
+
+async function openCamera() {
+
+    document.getElementById("homeScreen")
+    .classList.add("hidden");
+
+
+    document.getElementById("cameraScreen")
+    .classList.remove("hidden");
+
+
+    try {
+
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+
+            video: {
+                facingMode: "user"
+            },
+
+            audio: false
+
+        });
+
+
+        const video = document.getElementById("cameraView");
+
+        video.srcObject = cameraStream;
+
+
+    } catch(error) {
+
+        alert("Camera permission is needed for Snap It 📸");
+
+        console.log(error);
+
+    }
+
+}
+
+
+
+function closeCamera() {
+
+
+    document.getElementById("cameraScreen")
+    .classList.add("hidden");
+
+
+    document.getElementById("homeScreen")
+    .classList.remove("hidden");
+
+
+    if(cameraStream) {
+
+        cameraStream.getTracks()
+        .forEach(track => track.stop());
+
+        cameraStream = null;
+
+    }
+
+}
+
+
+
+function takePhoto() {
+
+    const video = document.getElementById("cameraView");
+
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = video.videoWidth;
+
+    canvas.height = video.videoHeight;
+
+
+    const context = canvas.getContext("2d");
+
+
+    context.drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    alert("Photo captured! 📸");
+
+}
