@@ -12,6 +12,42 @@ let currentFriend = "";
 
 
 
+let responses = {
+
+    Alex:[
+        "lol that's funny",
+        "what are you doing?",
+        "nice 😂",
+        "I didn't know that"
+    ],
+
+    Sam:[
+        "yo what's up",
+        "that's cool",
+        "haha",
+        "tell me more"
+    ],
+
+    Jordan:[
+        "interesting",
+        "no way",
+        "that's awesome",
+        "😂😂"
+    ],
+
+    Taylor:[
+        "I agree",
+        "really?",
+        "that's crazy",
+        "cool"
+    ]
+
+};
+
+
+
+
+
 function hideScreens(){
 
     document.getElementById("cameraScreen").classList.add("hidden");
@@ -59,8 +95,7 @@ function loadFriends(){
     friends.forEach(friend=>{
 
 
-        let item =
-        document.createElement("div");
+        let item=document.createElement("div");
 
 
         item.className="friend";
@@ -85,6 +120,8 @@ function loadFriends(){
 
 
 
+
+
 function openSearch(){
 
     hideScreens();
@@ -93,6 +130,145 @@ function openSearch(){
     .classList.remove("hidden");
 
 }
+
+
+
+
+
+function openChat(friend){
+
+    hideScreens();
+
+
+    document.getElementById("messageScreen")
+    .classList.remove("hidden");
+
+
+    currentFriend=friend;
+
+
+    document.getElementById("chatName")
+    .innerText=friend;
+
+
+    document.getElementById("messages")
+    .innerHTML="";
+
+}
+
+
+
+
+
+function sendMessage(){
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    let text=input.value.trim();
+
+
+    if(text===""){
+        return;
+    }
+
+
+    addMessage(text,"sent");
+
+
+    input.value="";
+
+
+    friendReply();
+
+}
+
+
+
+
+
+function friendReply(){
+
+
+    let messages =
+    document.getElementById("messages");
+
+
+    let typing =
+    document.createElement("div");
+
+
+    typing.className="bubble received";
+
+
+    typing.innerText="...";
+
+
+    messages.appendChild(typing);
+
+
+
+    let delay =
+    Math.floor(Math.random()*3000)+2000;
+
+
+
+    setTimeout(()=>{
+
+
+        typing.remove();
+
+
+
+        let list =
+        responses[currentFriend];
+
+
+        let reply =
+        list[Math.floor(Math.random()*list.length)];
+
+
+
+        addMessage(reply,"received");
+
+
+    },delay);
+
+
+}
+
+
+
+
+
+function addMessage(text,type){
+
+
+    let messages =
+    document.getElementById("messages");
+
+
+    let bubble =
+    document.createElement("div");
+
+
+    bubble.className=
+    "bubble "+type;
+
+
+    bubble.innerText=text;
+
+
+    messages.appendChild(bubble);
+
+
+    messages.scrollTop=
+    messages.scrollHeight;
+
+}
+
+
 
 
 
@@ -109,14 +285,13 @@ function searchPeople(){
     results.innerHTML="";
 
 
-    if(name.length > 0){
-
-        let button =
-        document.createElement("button");
+    if(name.length>0){
 
 
-        button.innerText =
-        "Add " + name;
+        let button=document.createElement("button");
+
+
+        button.innerText="Add "+name;
 
 
         button.onclick=function(){
@@ -135,79 +310,6 @@ function searchPeople(){
 }
 
 
-
-function openChat(friend){
-
-    hideScreens();
-
-
-    document.getElementById("messageScreen")
-    .classList.remove("hidden");
-
-
-    currentFriend = friend;
-
-
-    document.getElementById("chatName")
-    .innerText = friend;
-
-
-    document.getElementById("messages")
-    .innerHTML="";
-
-}
-
-
-
-function sendMessage(){
-
-    let input =
-    document.getElementById("messageInput");
-
-
-    let text =
-    input.value.trim();
-
-
-    if(text === ""){
-        return;
-    }
-
-
-    addMessage(text,"sent");
-
-
-    input.value="";
-
-}
-
-
-
-function addMessage(text,type){
-
-
-    let messages =
-    document.getElementById("messages");
-
-
-    let bubble =
-    document.createElement("div");
-
-
-    bubble.className =
-    "bubble " + type;
-
-
-    bubble.innerText=text;
-
-
-    messages.appendChild(bubble);
-
-
-    messages.scrollTop =
-    messages.scrollHeight;
-
-}
 
 
 
