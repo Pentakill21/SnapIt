@@ -13,6 +13,10 @@ body{
 
     overflow:hidden;
 
+    background:#000;
+
+    color:white;
+
 }
 
 
@@ -31,6 +35,8 @@ main{
     display:flex;
 
     flex-direction:column;
+
+    background:#000;
 
 }
 
@@ -69,15 +75,15 @@ main{
 
     transform:translateX(-50%);
 
-    width:80px;
+    width:85px;
 
-    height:80px;
+    height:85px;
 
     border-radius:50%;
 
     background:white;
 
-    border:5px solid #ddd;
+    border:5px solid #333;
 
 }
 
@@ -112,6 +118,8 @@ main{
 
     background:none;
 
+    color:white;
+
     font-size:28px;
 
 }
@@ -128,6 +136,8 @@ main{
     text-align:center;
 
     margin-top:20px;
+
+    color:white;
 
 }
 
@@ -147,7 +157,9 @@ main{
 
     font-size:20px;
 
-    border-bottom:1px solid #ddd;
+    border-bottom:1px solid #333;
+
+    color:white;
 
 }
 
@@ -155,7 +167,7 @@ main{
 
 
 
-/* CHAT */
+/* CHAT HEADER */
 
 
 .chatHeader{
@@ -170,6 +182,16 @@ main{
 
     padding:10px;
 
+    background:#000;
+
+}
+
+
+
+.chatHeader h1{
+
+    color:white;
+
 }
 
 
@@ -180,10 +202,17 @@ main{
 
     background:none;
 
+    color:white;
+
     font-size:25px;
 
 }
 
+
+
+
+
+/* MESSAGES */
 
 
 #messages{
@@ -224,7 +253,7 @@ main{
 
     align-self:flex-end;
 
-    background:#4da3ff;
+    background:#0a84ff;
 
     color:white;
 
@@ -236,7 +265,9 @@ main{
 
     align-self:flex-start;
 
-    background:#e5e5ea;
+    background:#333;
+
+    color:white;
 
 }
 
@@ -277,11 +308,23 @@ main{
 
     border-radius:25px;
 
-    border:1px solid #ccc;
+    border:none;
+
+    background:#222;
+
+    color:white;
 
     padding:0 18px;
 
     font-size:16px;
+
+}
+
+
+
+.messageBar input::placeholder{
+
+    color:#aaa;
 
 }
 
@@ -297,6 +340,51 @@ main{
 
     border:none;
 
+    background:#0a84ff;
+
+    color:white;
+
     font-size:20px;
+
+}
+
+
+
+
+
+/* SEARCH */
+
+
+#searchBox{
+
+    margin:20px;
+
+    height:45px;
+
+    border-radius:25px;
+
+    border:none;
+
+    background:#222;
+
+    color:white;
+
+    padding:0 20px;
+
+    font-size:16px;
+
+}
+
+
+
+#searchResults button{
+
+    margin:20px;
+
+    padding:12px;
+
+    border-radius:20px;
+
+    border:none;
 
 }
