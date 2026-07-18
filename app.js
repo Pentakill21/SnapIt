@@ -8,35 +8,27 @@ let friends = [
 
 let currentFriend = "";
 
+let lastMessage = "";
 
 
-let responses = {
 
-Alex:[
-"lol 😂",
-"what are you doing?",
-"that's funny",
-"nice"
-],
+let personalities = {
 
-Sam:[
-"yo what's up",
-"haha",
-"that's cool",
-"tell me more"
-],
+    Alex:{
+        style:"funny"
+    },
 
-Jordan:[
-"no way",
-"that's awesome",
-"interesting"
-],
+    Sam:{
+        style:"chill"
+    },
 
-Taylor:[
-"really?",
-"cool",
-"I agree"
-]
+    Jordan:{
+        style:"gamer"
+    },
+
+    Taylor:{
+        style:"energetic"
+    }
 
 };
 
@@ -44,16 +36,17 @@ Taylor:[
 
 
 
+
+
 function hideScreens(){
 
-document.getElementById("cameraScreen").classList.add("hidden");
-document.getElementById("chatScreen").classList.add("hidden");
-document.getElementById("searchScreen").classList.add("hidden");
-document.getElementById("messageScreen").classList.add("hidden");
-document.getElementById("profileScreen").classList.add("hidden");
+    document.getElementById("cameraScreen").classList.add("hidden");
+    document.getElementById("chatScreen").classList.add("hidden");
+    document.getElementById("searchScreen").classList.add("hidden");
+    document.getElementById("messageScreen").classList.add("hidden");
+    document.getElementById("profileScreen").classList.add("hidden");
 
 }
-
 
 
 
@@ -62,12 +55,13 @@ document.getElementById("profileScreen").classList.add("hidden");
 
 function openCamera(){
 
-hideScreens();
+    hideScreens();
 
-document.getElementById("cameraScreen")
-.classList.remove("hidden");
+    document.getElementById("cameraScreen")
+    .classList.remove("hidden");
 
 }
+
 
 
 
@@ -75,15 +69,14 @@ document.getElementById("cameraScreen")
 
 function openChatList(){
 
-hideScreens();
+    hideScreens();
 
-document.getElementById("chatScreen")
-.classList.remove("hidden");
+    document.getElementById("chatScreen")
+    .classList.remove("hidden");
 
-loadFriends();
+    loadFriends();
 
 }
-
 
 
 
@@ -92,36 +85,37 @@ loadFriends();
 
 function loadFriends(){
 
-let list =
-document.getElementById("friendList");
+    let list =
+    document.getElementById("friendList");
 
 
-list.innerHTML="";
+    list.innerHTML="";
 
 
-friends.forEach(friend=>{
+    friends.forEach(friend=>{
 
 
-let item=document.createElement("div");
+        let item =
+        document.createElement("div");
 
 
-item.className="friend";
+        item.className="friend";
 
 
-item.innerText=friend;
+        item.innerText=friend;
 
 
-item.onclick=function(){
+        item.onclick=function(){
 
-openChat(friend);
+            openChat(friend);
 
-};
-
-
-list.appendChild(item);
+        };
 
 
-});
+        list.appendChild(item);
+
+
+    });
 
 
 }
@@ -134,13 +128,12 @@ list.appendChild(item);
 
 function openSearch(){
 
-hideScreens();
+    hideScreens();
 
-document.getElementById("searchScreen")
-.classList.remove("hidden");
+    document.getElementById("searchScreen")
+    .classList.remove("hidden");
 
 }
-
 
 
 
@@ -150,50 +143,46 @@ document.getElementById("searchScreen")
 
 function searchPeople(){
 
-
-let name =
-document.getElementById("searchBox").value;
-
-
-let results =
-document.getElementById("searchResults");
+    let name =
+    document.getElementById("searchBox").value;
 
 
-results.innerHTML="";
+    let results =
+    document.getElementById("searchResults");
 
 
-
-if(name.length>0){
-
-
-let button=document.createElement("button");
+    results.innerHTML="";
 
 
-button.innerText="Add "+name;
+    if(name.length>0){
 
 
-
-button.onclick=function(){
-
-if(!friends.includes(name)){
-
-friends.push(name);
-
-}
+        let button =
+        document.createElement("button");
 
 
-loadFriends();
-
-
-};
+        button.innerText =
+        "Add " + name;
 
 
 
-results.appendChild(button);
+        button.onclick=function(){
+
+            if(!friends.includes(name)){
+
+                friends.push(name);
+
+            }
 
 
-}
+            loadFriends();
 
+        };
+
+
+        results.appendChild(button);
+
+    }
 
 }
 
@@ -206,22 +195,22 @@ results.appendChild(button);
 
 function openChat(friend){
 
-hideScreens();
+    hideScreens();
 
 
-document.getElementById("messageScreen")
-.classList.remove("hidden");
+    document.getElementById("messageScreen")
+    .classList.remove("hidden");
 
 
-currentFriend=friend;
+    currentFriend=friend;
 
 
-document.getElementById("chatName")
-.innerText=friend;
+    document.getElementById("chatName")
+    .innerText=friend;
 
 
-document.getElementById("messages")
-.innerHTML="";
+    document.getElementById("messages")
+    .innerHTML="";
 
 }
 
@@ -234,32 +223,32 @@ document.getElementById("messages")
 
 function sendMessage(){
 
-
-let input =
-document.getElementById("messageInput");
-
-
-let text =
-input.value.trim();
+    let input =
+    document.getElementById("messageInput");
 
 
+    let text =
+    input.value.trim();
 
-if(text===""){
-return;
+
+    if(text===""){
+        return;
+    }
+
+
+    lastMessage=text;
+
+
+    addMessage(text,"sent");
+
+
+    input.value="";
+
+
+    friendReply();
+
 }
 
-
-
-addMessage(text,"sent");
-
-
-input.value="";
-
-
-friendReply();
-
-
-}
 
 
 
@@ -270,27 +259,26 @@ friendReply();
 function addMessage(text,type){
 
 
-let messages =
-document.getElementById("messages");
+    let box =
+    document.getElementById("messages");
 
 
-let bubble =
-document.createElement("div");
+    let bubble =
+    document.createElement("div");
 
 
-bubble.className =
-"bubble "+type;
+    bubble.className =
+    "bubble " + type;
 
 
-bubble.innerText=text;
+    bubble.innerText=text;
 
 
-messages.appendChild(bubble);
+    box.appendChild(bubble);
 
 
-messages.scrollTop =
-messages.scrollHeight;
-
+    box.scrollTop =
+    box.scrollHeight;
 
 }
 
@@ -304,62 +292,175 @@ messages.scrollHeight;
 function friendReply(){
 
 
-let messages =
-document.getElementById("messages");
+    let typing =
+    document.createElement("div");
+
+
+    typing.className="bubble received";
+
+
+    typing.innerText="...";
+
+
+    document.getElementById("messages")
+    .appendChild(typing);
 
 
 
-let typing =
-document.createElement("div");
 
-
-typing.className="bubble received";
-
-
-typing.innerText="...";
-
-
-messages.appendChild(typing);
+    let delay =
+    Math.random()*2500+1500;
 
 
 
-let delay =
-Math.random()*3000+2000;
+    setTimeout(()=>{
 
 
-
-setTimeout(()=>{
-
-
-typing.remove();
+        typing.remove();
 
 
-
-let replies =
-responses[currentFriend] || [
-
-"cool",
-"haha",
-"okay"
-
-];
+        let reply =
+        generateReply(
+            currentFriend,
+            lastMessage
+        );
 
 
-
-let reply =
-replies[
-Math.floor(Math.random()*replies.length)
-];
+        addMessage(reply,"received");
 
 
+    },delay);
 
-addMessage(reply,"received");
-
-
-},delay);
 
 
 }
+
+
+
+
+
+
+
+
+
+function generateReply(friend,message){
+
+
+    let text =
+    message.toLowerCase();
+
+
+
+    let style =
+    personalities[friend]?.style;
+
+
+
+    if(text.includes("sad") ||
+       text.includes("bad day") ||
+       text.includes("upset")){
+
+
+        if(style==="funny")
+            return "Dang 😭 rough day? Want me to distract you?";
+
+
+        return "I'm sorry 😕 wanna talk about what happened?";
+
+    }
+
+
+
+
+    if(text.includes("happy") ||
+       text.includes("awesome") ||
+       text.includes("amazing")){
+
+
+        return "Let's gooo 🔥 that's actually awesome!";
+
+    }
+
+
+
+
+
+    if(text.includes("game") ||
+       text.includes("gaming")){
+
+
+        if(style==="gamer")
+            return "YES 🎮 what game are you playing?";
+
+
+        return "Nice 😂 what are you playing?";
+
+    }
+
+
+
+
+
+    if(text.includes("school") ||
+       text.includes("class")){
+
+
+        return "School can be crazy sometimes 😭 how was it?";
+
+    }
+
+
+
+
+
+    if(text.includes("food") ||
+       text.includes("eat")){
+
+
+        return "Now I'm hungry 😂 what did you eat?";
+
+    }
+
+
+
+
+
+    if(text.includes("?")){
+
+
+        return "Hmm 🤔 good question. What do you think?";
+
+    }
+
+
+
+
+
+    if(style==="funny"){
+
+        return "LOL 😂 tell me more";
+
+    }
+
+
+    if(style==="chill"){
+
+        return "I get you. That makes sense.";
+
+    }
+
+
+    if(style==="gamer"){
+
+        return "Interesting 👀";
+
+    }
+
+
+    return "No way 😂 keep going";
+
+}
+
 
 
 
@@ -371,21 +472,19 @@ addMessage(reply,"received");
 function openProfile(){
 
 
-hideScreens();
+    hideScreens();
 
 
-document.getElementById("profileScreen")
-.classList.remove("hidden");
+    document.getElementById("profileScreen")
+    .classList.remove("hidden");
 
 
-
-document.getElementById("profileName")
-.innerText=currentFriend;
-
+    document.getElementById("profileName")
+    .innerText=currentFriend;
 
 
-document.getElementById("profileFriendName")
-.innerText=currentFriend;
+    document.getElementById("profileFriendName")
+    .innerText=currentFriend;
 
 
 }
@@ -396,11 +495,10 @@ document.getElementById("profileFriendName")
 
 
 
+
 function backToChat(){
 
-
-openChat(currentFriend);
-
+    openChat(currentFriend);
 
 }
 
@@ -414,32 +512,26 @@ openChat(currentFriend);
 function unaddFriend(){
 
 
-let answer =
-confirm(
-"Unadd "+currentFriend+"?"
-);
+    let confirmDelete =
+    confirm(
+        "Unadd " + currentFriend + "?"
+    );
 
 
-
-if(answer){
-
-
-friends =
-friends.filter(
-friend=>friend!==currentFriend
-);
+    if(confirmDelete){
 
 
+        friends =
+        friends.filter(
+            friend=>friend!==currentFriend
+        );
 
-openChatList();
 
+        openChatList();
 
-}
-
-
+    }
 
 }
-
 
 
 
@@ -449,7 +541,7 @@ openChatList();
 
 function takePhoto(){
 
-console.log("photo taken");
+    console.log("snap!");
 
 }
 
@@ -461,6 +553,6 @@ console.log("photo taken");
 
 window.onload=function(){
 
-openCamera();
+    openCamera();
 
 };
