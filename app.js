@@ -82,8 +82,101 @@ function openChatList(){
 }
 
 
-
 function loadFriends(){
+
+    let list =
+    document.getElementById("friendList");
+
+
+    list.innerHTML="";
+
+
+    friends.forEach(friend=>{
+
+
+        let item=document.createElement("div");
+
+
+        item.className="friend";
+
+
+        item.innerText=friend;
+
+
+
+        item.onclick=function(){
+
+            openChat(friend);
+
+        };
+
+
+
+        item.addEventListener("contextmenu", function(event){
+
+            event.preventDefault();
+
+            removeFriend(friend);
+
+        });
+
+
+
+        let pressTimer;
+
+
+        item.addEventListener("touchstart", function(){
+
+            pressTimer=setTimeout(()=>{
+
+                removeFriend(friend);
+
+            },700);
+
+        });
+
+
+
+        item.addEventListener("touchend", function(){
+
+            clearTimeout(pressTimer);
+
+        });
+
+
+
+        list.appendChild(item);
+
+
+    });
+
+}
+
+
+
+
+
+function removeFriend(friend){
+
+    let confirmDelete =
+    confirm(
+        "Remove " + friend + "?"
+    );
+
+
+    if(confirmDelete){
+
+        friends =
+        friends.filter(
+            person => person !== friend
+        );
+
+
+        loadFriends();
+
+    }
+
+}
 
     let list =
     document.getElementById("friendList");
