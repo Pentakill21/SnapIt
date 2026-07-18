@@ -313,3 +313,22 @@ function addFriend(person){
     );
 
 }
+function openChat(friend){
+
+    hideScreens();
+
+    document.getElementById("messageScreen")
+    .classList.remove("hidden");
+
+
+    currentFriend = friend;
+
+
+    document.getElementById("chatName")
+    .innerText = friend;
+
+
+    document.getElementById("messages")
+    .innerHTML = "";
+
+}
