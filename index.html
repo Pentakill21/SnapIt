@@ -16,7 +16,7 @@
 
     <header>
         <h1>Snap It</h1>
-        <button id="cameraButton">📸</button>
+       <button onclick="openCamera()">📸</button>
     </header>
 
 
@@ -108,6 +108,17 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
 }
 </script>
+    <div id="cameraScreen" class="hidden">
+
+    <button onclick="closeCamera()">← Back</button>
+
+    <video id="cameraView" autoplay playsinline></video>
+
+    <button onclick="takePhoto()">
+        Take Photo 📸
+    </button>
+
+</div>
 <script src="app.js"></script>
 
 </body>
