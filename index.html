@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Snap It</title>
@@ -19,14 +20,16 @@
 <div class="app">
 
 
-<!-- CAMERA -->
+<!-- CAMERA SCREEN -->
 
 <main id="cameraScreen">
+
 
 <video id="cameraView" autoplay playsinline></video>
 
 
 <button class="shutter" onclick="takePhoto()"></button>
+
 
 
 <div class="bottomNav">
@@ -45,8 +48,8 @@
 🔍
 </button>
 
-
 </div>
+
 
 </main>
 
@@ -54,7 +57,7 @@
 
 
 
-<!-- FRIEND LIST -->
+<!-- HOME / FRIEND LIST -->
 
 <main id="chatScreen" class="hidden">
 
@@ -72,7 +75,6 @@ Chat
 
 <div class="bottomNav">
 
-
 <button onclick="openChatList()">
 🏠
 </button>
@@ -97,7 +99,7 @@ Chat
 
 
 
-<!-- SEARCH -->
+<!-- SEARCH SCREEN -->
 
 <main id="searchScreen" class="hidden">
 
@@ -107,11 +109,13 @@ Search
 </h1>
 
 
+
 <input 
 id="searchBox"
 placeholder="Search people..."
 oninput="searchPeople()"
 >
+
 
 
 <div id="searchResults">
@@ -123,7 +127,6 @@ oninput="searchPeople()"
 
 <div class="bottomNav">
 
-
 <button onclick="openChatList()">
 🏠
 </button>
@@ -148,31 +151,60 @@ oninput="searchPeople()"
 
 
 
-<!-- CHAT WITH PERSON -->
 
+
+<!-- CHAT SCREEN -->
 
 <main id="messageScreen" class="hidden">
 
 
-<h1 id="chatName" class="title">
+<div class="chatHeader">
+
+
+<button onclick="openChatList()">
+←
+</button>
+
+
+
+<h1 id="chatName">
 Chat
 </h1>
 
 
-<div id="messages">
 
 </div>
 
 
-<input 
+
+
+<div id="messages">
+
+
+</div>
+
+
+
+
+
+<div class="messageBar">
+
+
+<input
 id="messageInput"
 placeholder="Message..."
 >
 
 
+
 <button onclick="sendMessage()">
-Send
+➤
 </button>
+
+
+
+</div>
+
 
 
 </main>
@@ -183,9 +215,11 @@ Send
 
 
 
+
 <script src="app.js"></script>
 
 
 </body>
+
 
 </html>
