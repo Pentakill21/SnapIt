@@ -108,11 +108,15 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
 }
 </script>
-    <div id="cameraScreen" class="hidden">
+  <div id="cameraScreen" class="hidden">
 
     <button onclick="closeCamera()">← Back</button>
 
     <video id="cameraView" autoplay playsinline></video>
+
+    <button onclick="flipCamera()">
+        🔄 Flip
+    </button>
 
     <button onclick="takePhoto()">
         Take Photo 📸
