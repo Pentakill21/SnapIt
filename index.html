@@ -20,33 +20,20 @@
 <div class="app">
 
 
-<!-- CAMERA SCREEN -->
-
 <main id="cameraScreen">
 
-
 <video id="cameraView" autoplay playsinline></video>
-
 
 <button class="shutter" onclick="takePhoto()"></button>
 
 
-
 <div class="bottomNav">
 
-<button onclick="openChatList()">
-🏠
-</button>
+<button onclick="openChatList()">🏠</button>
 
+<button onclick="openCamera()">📷</button>
 
-<button onclick="openCamera()">
-📷
-</button>
-
-
-<button onclick="openSearch()">
-🔍
-</button>
+<button onclick="openSearch()">🔍</button>
 
 </div>
 
@@ -56,8 +43,6 @@
 
 
 
-
-<!-- HOME / FRIEND LIST -->
 
 <main id="chatScreen" class="hidden">
 
@@ -67,28 +52,16 @@ Chat
 </h1>
 
 
-<div id="friendList">
-
-</div>
-
+<div id="friendList"></div>
 
 
 <div class="bottomNav">
 
-<button onclick="openChatList()">
-🏠
-</button>
+<button onclick="openChatList()">🏠</button>
 
+<button onclick="openCamera()">📷</button>
 
-<button onclick="openCamera()">
-📷
-</button>
-
-
-<button onclick="openSearch()">
-🔍
-</button>
-
+<button onclick="openSearch()">🔍</button>
 
 </div>
 
@@ -99,7 +72,7 @@ Chat
 
 
 
-<!-- SEARCH SCREEN -->
+
 
 <main id="searchScreen" class="hidden">
 
@@ -109,7 +82,6 @@ Search
 </h1>
 
 
-
 <input 
 id="searchBox"
 placeholder="Search people..."
@@ -117,30 +89,17 @@ oninput="searchPeople()"
 >
 
 
-
-<div id="searchResults">
-
-</div>
-
+<div id="searchResults"></div>
 
 
 
 <div class="bottomNav">
 
-<button onclick="openChatList()">
-🏠
-</button>
+<button onclick="openChatList()">🏠</button>
 
+<button onclick="openCamera()">📷</button>
 
-<button onclick="openCamera()">
-📷
-</button>
-
-
-<button onclick="openSearch()">
-🔍
-</button>
-
+<button onclick="openSearch()">🔍</button>
 
 </div>
 
@@ -153,18 +112,15 @@ oninput="searchPeople()"
 
 
 
-<!-- CHAT SCREEN -->
 
 <main id="messageScreen" class="hidden">
 
 
 <div class="chatHeader">
 
-
 <button onclick="openChatList()">
 ←
 </button>
-
 
 
 <h1 id="chatName">
@@ -172,38 +128,31 @@ Chat
 </h1>
 
 
-
 </div>
 
 
 
 
-<div id="messages">
-
-
-</div>
+<div id="messages"></div>
 
 
 
 
+<form class="messageBar" onsubmit="sendMessage(); return false;">
 
-<div class="messageBar">
 
-
-<input
+<input 
 id="messageInput"
 placeholder="Message..."
 >
 
 
-
-<button onclick="sendMessage()">
+<button type="submit">
 ➤
 </button>
 
 
-
-</div>
+</form>
 
 
 
@@ -212,7 +161,6 @@ placeholder="Message..."
 
 
 </div>
-
 
 
 
