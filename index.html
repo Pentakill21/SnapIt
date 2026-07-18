@@ -1,70 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Snap It</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+<title>Snap It</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-    <header>
-        <h1>Snap It</h1>
-       <button onclick="openCamera()">📸</button>
-    </header>
+
+    <!-- CAMERA SCREEN -->
+
+    <main id="cameraScreen">
+
+        <video id="cameraView" autoplay playsinline></video>
 
 
-    <main id="homeScreen">
-
-        <h2>AI Friends</h2>
+        <button class="shutter" onclick="takePhoto()"></button>
 
 
-        <div class="friend" onclick="openChat('Emma')">
+        <div class="bottomNav">
 
-            <div class="avatar">
-                😊
-            </div>
-
-            <div>
-                <h3>Emma</h3>
-                <p>Hey, how was your day?</p>
-            </div>
-
-        </div>
+            <button onclick="openChatList()">
+                🏠
+            </button>
 
 
-
-        <div class="friend" onclick="openChat('Jake')">
-
-            <div class="avatar">
-                😎
-            </div>
-
-            <div>
-                <h3>Jake</h3>
-                <p>Bro, what are you up to?</p>
-            </div>
-
-        </div>
+            <button onclick="openCamera()" class="cameraIcon">
+                📷
+            </button>
 
 
-
-        <div class="friend" onclick="openChat('Sophie')">
-
-            <div class="avatar">
-                💙
-            </div>
-
-            <div>
-                <h3>Sophie</h3>
-                <p>I was thinking about something...</p>
-            </div>
+            <button onclick="openSearch()">
+                🔍
+            </button>
 
         </div>
 
@@ -73,26 +52,87 @@
 
 
 
+
+
+    <!-- CHAT LIST SCREEN -->
+
     <main id="chatScreen" class="hidden">
 
-        <button onclick="goHome()">← Back</button>
 
-        <h2 id="chatName"></h2>
-
-
-        <div id="messages"></div>
+        <h1 class="title">
+            Chat
+        </h1>
 
 
-        <div class="inputArea">
-
-            <input 
-            id="messageInput"
-            placeholder="Message..."
-            >
+        <div id="friendList">
 
 
-            <button onclick="sendMessage()">
-                Send
+        </div>
+
+
+        <div class="bottomNav">
+
+            <button onclick="openChatList()">
+                🏠
+            </button>
+
+
+            <button onclick="openCamera()">
+                📷
+            </button>
+
+
+            <button onclick="openSearch()">
+                🔍
+            </button>
+
+        </div>
+
+
+    </main>
+
+
+
+
+
+
+    <!-- SEARCH SCREEN -->
+
+    <main id="searchScreen" class="hidden">
+
+
+        <h1 class="title">
+            Search
+        </h1>
+
+
+        <input 
+        id="searchBox"
+        placeholder="Search people..."
+        oninput="searchPeople()"
+        >
+
+
+        <div id="searchResults">
+
+        </div>
+
+
+
+        <div class="bottomNav">
+
+            <button onclick="openChatList()">
+                🏠
+            </button>
+
+
+            <button onclick="openCamera()">
+                📷
+            </button>
+
+
+            <button onclick="openSearch()">
+                🔍
             </button>
 
         </div>
@@ -103,27 +143,10 @@
 
 </div>
 
-<script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-}
-</script>
-  <div id="cameraScreen" class="hidden">
 
-    <button onclick="closeCamera()">← Back</button>
-
-    <video id="cameraView" autoplay playsinline></video>
-
-    <button onclick="flipCamera()">
-        🔄 Flip
-    </button>
-
-    <button onclick="takePhoto()">
-        Take Photo 📸
-    </button>
-
-</div>
 <script src="app.js"></script>
 
+
 </body>
+
 </html>
