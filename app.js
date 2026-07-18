@@ -1,190 +1,79 @@
 let cameraStream = null;
-let usingFrontCamera = true;
-
-let currentFriend = "";
 
 
-const responses = {
+const friends = [
+    "Emma",
+    "Jake",
+    "Sophie"
+];
 
-    Emma: [
-        "I was wondering how your day was 😊",
-        "Tell me what happened today.",
-        "I'm glad you're here.",
-        "You always have interesting things to say."
-    ],
 
-    Jake: [
-        "Yo, finally 😂",
-        "What are we doing today?",
-        "I have a random question for you.",
-        "Bro, you disappeared."
-    ],
+const people = [
+    "Emma",
+    "Jake",
+    "Sophie",
+    "Olivia",
+    "Noah",
+    "Ava",
+    "Ethan",
+    "Mia",
+    "Lucas",
+    "Chloe"
+];
 
-    Sophie: [
-        "That is actually really interesting.",
-        "I think you should follow what feels right.",
-        "Tell me more about that.",
-        "I like hearing your thoughts."
-    ]
+
+
+
+
+// START CAMERA WHEN APP OPENS
+
+window.onload = function(){
+
+    openCamera();
+
+    loadFriends();
 
 };
 
 
 
-function openChat(friend) {
-
-    currentFriend = friend;
-
-    document.getElementById("homeScreen")
-    .classList.add("hidden");
-
-    document.getElementById("chatScreen")
-    .classList.remove("hidden");
-
-
-    document.getElementById("chatName")
-    .innerText = friend;
-
-
-    document.getElementById("messages")
-    .innerHTML = "";
-
-
-    addMessage(
-        "Hey! I'm " + friend + ". I'm happy to talk with you 😊",
-        "ai"
-    );
-
-}
 
 
 
-function goHome() {
-
-    document.getElementById("homeScreen")
-    .classList.remove("hidden");
-
-    document.getElementById("chatScreen")
-    .classList.add("hidden");
-
-}
+// CAMERA
 
 
+async function openCamera(){
 
-function sendMessage() {
-
-    const input = document.getElementById("messageInput");
-
-    let text = input.value.trim();
-
-
-    if(text === "") return;
-
-
-    addMessage(text, "user");
-
-
-    input.value = "";
-
-
-    setTimeout(() => {
-
-        let friendReplies = responses[currentFriend];
-
-
-        let reply =
-        friendReplies[
-            Math.floor(Math.random() * friendReplies.length)
-        ];
-
-
-        addMessage(reply, "ai");
-
-
-    }, 900);
-
-}
-
-
-
-
-function addMessage(text,type) {
-
-    const box = document.getElementById("messages");
-
-
-    const message = document.createElement("div");
-
-
-    message.className = "message " + type;
-
-
-    message.innerText = text;
-
-
-    box.appendChild(message);
-
-
-    box.scrollTop = box.scrollHeight;
-
-}
-
-
-
-
-
-// CAMERA SYSTEM
-
-
-async function openCamera() {
-
-
-    document.getElementById("homeScreen")
-    .classList.add("hidden");
-
+    hideScreens();
 
     document.getElementById("cameraScreen")
     .classList.remove("hidden");
 
 
-    cameraStream = await navigator.mediaDevices.getUserMedia({
+    try {
 
-        video:{
-            facingMode: usingFrontCamera
-            ? "user"
-            : "environment"
-        },
+        cameraStream =
+        await navigator.mediaDevices.getUserMedia({
 
-        audio:false
+            video:{
+                facingMode:"user"
+            },
 
-    });
+            audio:false
 
-
-    document.getElementById("cameraView")
-    .srcObject = cameraStream;
-
-}
+        });
 
 
+        document.getElementById("cameraView")
+        .srcObject = cameraStream;
 
 
-function closeCamera() {
+    }
 
+    catch(error){
 
-    document.getElementById("cameraScreen")
-    .classList.add("hidden");
-
-
-    document.getElementById("homeScreen")
-    .classList.remove("hidden");
-
-
-    if(cameraStream){
-
-        cameraStream.getTracks()
-        .forEach(track => track.stop());
-
-        cameraStream = null;
+        console.log(error);
 
     }
 
@@ -193,36 +82,9 @@ function closeCamera() {
 
 
 
+function takePhoto(){
 
-async function flipCamera() {
-
-
-    usingFrontCamera = !usingFrontCamera;
-
-
-    if(cameraStream){
-
-        cameraStream.getTracks()
-        .forEach(track => track.stop());
-
-    }
-
-
-    cameraStream = await navigator.mediaDevices.getUserMedia({
-
-        video:{
-            facingMode: usingFrontCamera
-            ? "user"
-            : "environment"
-        },
-
-        audio:false
-
-    });
-
-
-    document.getElementById("cameraView")
-    .srcObject = cameraStream;
+    // photo capture will be added later
 
 }
 
@@ -230,31 +92,177 @@ async function flipCamera() {
 
 
 
-function takePhoto() {
-
-    const video = document.getElementById("cameraView");
 
 
-    const canvas = document.createElement("canvas");
+// NAVIGATION
 
 
-    canvas.width = video.videoWidth;
+function hideScreens(){
 
-    canvas.height = video.videoHeight;
-
-
-    const ctx = canvas.getContext("2d");
+    document.getElementById("cameraScreen")
+    .classList.add("hidden");
 
 
-    ctx.drawImage(
-        video,
-        0,
-        0,
-        canvas.width,
-        canvas.height
+    document.getElementById("chatScreen")
+    .classList.add("hidden");
+
+
+    document.getElementById("searchScreen")
+    .classList.add("hidden");
+
+}
+
+
+
+
+
+function openChatList(){
+
+    hideScreens();
+
+    document.getElementById("chatScreen")
+    .classList.remove("hidden");
+
+    loadFriends();
+
+}
+
+
+
+
+
+
+function openSearch(){
+
+    hideScreens();
+
+    document.getElementById("searchScreen")
+    .classList.remove("hidden");
+
+}
+
+
+
+
+
+
+
+// FRIEND LIST
+
+
+function loadFriends(){
+
+    const list =
+    document.getElementById("friendList");
+
+
+    list.innerHTML="";
+
+
+    friends.forEach(friend=>{
+
+
+        let item =
+        document.createElement("div");
+
+
+        item.className="friend";
+
+
+        item.innerText=friend;
+
+
+        list.appendChild(item);
+
+
+    });
+
+}
+
+
+
+
+
+
+
+
+// SEARCH
+
+
+function searchPeople(){
+
+
+    const search =
+    document.getElementById("searchBox")
+    .value
+    .toLowerCase();
+
+
+    const results =
+    document.getElementById("searchResults");
+
+
+    results.innerHTML="";
+
+
+    people.forEach(person=>{
+
+
+        if(
+            person.toLowerCase()
+            .includes(search)
+        ){
+
+
+            let button =
+            document.createElement("div");
+
+
+            button.className="friend";
+
+
+            button.innerText =
+            person + "  +";
+
+
+            button.onclick=function(){
+
+                addFriend(person);
+
+            };
+
+
+            results.appendChild(button);
+
+        }
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+function addFriend(person){
+
+
+    if(!friends.includes(person)){
+
+        friends.push(person);
+
+    }
+
+
+    loadFriends();
+
+
+    alert(
+        person + " added!"
     );
-
-
-    alert("Photo captured 📸");
 
 }
