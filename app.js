@@ -1,6 +1,3 @@
-let cameraStream = null;
-let usingFrontCamera = true;
-
 let friends = [
     "Alex",
     "Sam",
@@ -8,39 +5,38 @@ let friends = [
     "Taylor"
 ];
 
+
 let currentFriend = "";
 
 
 
 let responses = {
 
-    Alex:[
-        "lol that's funny",
-        "what are you doing?",
-        "nice 😂",
-        "I didn't know that"
-    ],
+Alex:[
+"lol 😂",
+"what are you doing?",
+"that's funny",
+"nice"
+],
 
-    Sam:[
-        "yo what's up",
-        "that's cool",
-        "haha",
-        "tell me more"
-    ],
+Sam:[
+"yo what's up",
+"haha",
+"that's cool",
+"tell me more"
+],
 
-    Jordan:[
-        "interesting",
-        "no way",
-        "that's awesome",
-        "😂😂"
-    ],
+Jordan:[
+"no way",
+"that's awesome",
+"interesting"
+],
 
-    Taylor:[
-        "I agree",
-        "really?",
-        "that's crazy",
-        "cool"
-    ]
+Taylor:[
+"really?",
+"cool",
+"I agree"
+]
 
 };
 
@@ -50,166 +46,87 @@ let responses = {
 
 function hideScreens(){
 
-    document.getElementById("cameraScreen").classList.add("hidden");
-    document.getElementById("chatScreen").classList.add("hidden");
-    document.getElementById("searchScreen").classList.add("hidden");
-    document.getElementById("messageScreen").classList.add("hidden");
+document.getElementById("cameraScreen").classList.add("hidden");
+document.getElementById("chatScreen").classList.add("hidden");
+document.getElementById("searchScreen").classList.add("hidden");
+document.getElementById("messageScreen").classList.add("hidden");
+document.getElementById("profileScreen").classList.add("hidden");
 
 }
+
+
+
+
 
 
 
 function openCamera(){
 
-    hideScreens();
+hideScreens();
 
-    document.getElementById("cameraScreen")
-    .classList.remove("hidden");
+document.getElementById("cameraScreen")
+.classList.remove("hidden");
 
 }
+
+
 
 
 
 function openChatList(){
 
-    hideScreens();
+hideScreens();
 
-    document.getElementById("chatScreen")
-    .classList.remove("hidden");
+document.getElementById("chatScreen")
+.classList.remove("hidden");
 
-    loadFriends();
+loadFriends();
 
 }
+
+
+
+
+
 
 
 function loadFriends(){
 
-    let list =
-    document.getElementById("friendList");
+let list =
+document.getElementById("friendList");
 
 
-    list.innerHTML="";
+list.innerHTML="";
 
 
-    friends.forEach(friend=>{
+friends.forEach(friend=>{
 
 
-        let item=document.createElement("div");
+let item=document.createElement("div");
 
 
-        item.className="friend";
+item.className="friend";
 
 
-        item.innerText=friend;
+item.innerText=friend;
 
 
+item.onclick=function(){
 
-        item.onclick=function(){
+openChat(friend);
 
-            openChat(friend);
-
-        };
-
+};
 
 
-        item.addEventListener("contextmenu", function(event){
-
-            event.preventDefault();
-
-            removeFriend(friend);
-
-        });
+list.appendChild(item);
 
 
+});
 
-        let pressTimer;
-
-
-        item.addEventListener("touchstart", function(){
-
-            pressTimer=setTimeout(()=>{
-
-                removeFriend(friend);
-
-            },700);
-
-        });
-
-
-
-        item.addEventListener("touchend", function(){
-
-            clearTimeout(pressTimer);
-
-        });
-
-
-
-        list.appendChild(item);
-
-
-    });
 
 }
 
 
-
-
-
-function removeFriend(friend){
-
-    let confirmDelete =
-    confirm(
-        "Remove " + friend + "?"
-    );
-
-
-    if(confirmDelete){
-
-        friends =
-        friends.filter(
-            person => person !== friend
-        );
-
-
-        loadFriends();
-
-    }
-
-}
-
-    let list =
-    document.getElementById("friendList");
-
-
-    list.innerHTML="";
-
-
-    friends.forEach(friend=>{
-
-
-        let item=document.createElement("div");
-
-
-        item.className="friend";
-
-
-        item.innerText=friend;
-
-
-        item.onclick=function(){
-
-            openChat(friend);
-
-        };
-
-
-        list.appendChild(item);
-
-
-    });
-
-}
 
 
 
@@ -217,12 +134,71 @@ function removeFriend(friend){
 
 function openSearch(){
 
-    hideScreens();
+hideScreens();
 
-    document.getElementById("searchScreen")
-    .classList.remove("hidden");
+document.getElementById("searchScreen")
+.classList.remove("hidden");
 
 }
+
+
+
+
+
+
+
+
+function searchPeople(){
+
+
+let name =
+document.getElementById("searchBox").value;
+
+
+let results =
+document.getElementById("searchResults");
+
+
+results.innerHTML="";
+
+
+
+if(name.length>0){
+
+
+let button=document.createElement("button");
+
+
+button.innerText="Add "+name;
+
+
+
+button.onclick=function(){
+
+if(!friends.includes(name)){
+
+friends.push(name);
+
+}
+
+
+loadFriends();
+
+
+};
+
+
+
+results.appendChild(button);
+
+
+}
+
+
+}
+
+
+
 
 
 
@@ -230,24 +206,27 @@ function openSearch(){
 
 function openChat(friend){
 
-    hideScreens();
+hideScreens();
 
 
-    document.getElementById("messageScreen")
-    .classList.remove("hidden");
+document.getElementById("messageScreen")
+.classList.remove("hidden");
 
 
-    currentFriend=friend;
+currentFriend=friend;
 
 
-    document.getElementById("chatName")
-    .innerText=friend;
+document.getElementById("chatName")
+.innerText=friend;
 
 
-    document.getElementById("messages")
-    .innerHTML="";
+document.getElementById("messages")
+.innerHTML="";
 
 }
+
+
+
 
 
 
@@ -255,81 +234,34 @@ function openChat(friend){
 
 function sendMessage(){
 
-    let input =
-    document.getElementById("messageInput");
+
+let input =
+document.getElementById("messageInput");
 
 
-    let text=input.value.trim();
+let text =
+input.value.trim();
 
 
-    if(text===""){
-        return;
-    }
 
-
-    addMessage(text,"sent");
-
-
-    input.value="";
-
-
-    friendReply();
-
+if(text===""){
+return;
 }
 
 
 
+addMessage(text,"sent");
 
 
-function friendReply(){
+input.value="";
 
 
-    let messages =
-    document.getElementById("messages");
-
-
-    let typing =
-    document.createElement("div");
-
-
-    typing.className="bubble received";
-
-
-    typing.innerText="...";
-
-
-    messages.appendChild(typing);
-
-
-
-    let delay =
-    Math.floor(Math.random()*3000)+2000;
-
-
-
-    setTimeout(()=>{
-
-
-        typing.remove();
-
-
-
-        let list =
-        responses[currentFriend];
-
-
-        let reply =
-        list[Math.floor(Math.random()*list.length)];
-
-
-
-        addMessage(reply,"received");
-
-
-    },delay);
+friendReply();
 
 
 }
+
+
 
 
 
@@ -338,26 +270,27 @@ function friendReply(){
 function addMessage(text,type){
 
 
-    let messages =
-    document.getElementById("messages");
+let messages =
+document.getElementById("messages");
 
 
-    let bubble =
-    document.createElement("div");
+let bubble =
+document.createElement("div");
 
 
-    bubble.className=
-    "bubble "+type;
+bubble.className =
+"bubble "+type;
 
 
-    bubble.innerText=text;
+bubble.innerText=text;
 
 
-    messages.appendChild(bubble);
+messages.appendChild(bubble);
 
 
-    messages.scrollTop=
-    messages.scrollHeight;
+messages.scrollTop =
+messages.scrollHeight;
+
 
 }
 
@@ -365,42 +298,150 @@ function addMessage(text,type){
 
 
 
-function searchPeople(){
-
-    let name =
-    document.getElementById("searchBox").value;
 
 
-    let results =
-    document.getElementById("searchResults");
+
+function friendReply(){
 
 
-    results.innerHTML="";
+let messages =
+document.getElementById("messages");
 
 
-    if(name.length>0){
+
+let typing =
+document.createElement("div");
 
 
-        let button=document.createElement("button");
+typing.className="bubble received";
 
 
-        button.innerText="Add "+name;
+typing.innerText="...";
 
 
-        button.onclick=function(){
-
-            friends.push(name);
-
-            loadFriends();
-
-        };
+messages.appendChild(typing);
 
 
-        results.appendChild(button);
 
-    }
+let delay =
+Math.random()*3000+2000;
+
+
+
+setTimeout(()=>{
+
+
+typing.remove();
+
+
+
+let replies =
+responses[currentFriend] || [
+
+"cool",
+"haha",
+"okay"
+
+];
+
+
+
+let reply =
+replies[
+Math.floor(Math.random()*replies.length)
+];
+
+
+
+addMessage(reply,"received");
+
+
+},delay);
+
 
 }
+
+
+
+
+
+
+
+
+function openProfile(){
+
+
+hideScreens();
+
+
+document.getElementById("profileScreen")
+.classList.remove("hidden");
+
+
+
+document.getElementById("profileName")
+.innerText=currentFriend;
+
+
+
+document.getElementById("profileFriendName")
+.innerText=currentFriend;
+
+
+}
+
+
+
+
+
+
+
+function backToChat(){
+
+
+openChat(currentFriend);
+
+
+}
+
+
+
+
+
+
+
+
+function unaddFriend(){
+
+
+let answer =
+confirm(
+"Unadd "+currentFriend+"?"
+);
+
+
+
+if(answer){
+
+
+friends =
+friends.filter(
+friend=>friend!==currentFriend
+);
+
+
+
+openChatList();
+
+
+}
+
+
+
+}
+
+
+
 
 
 
@@ -408,14 +449,18 @@ function searchPeople(){
 
 function takePhoto(){
 
-    console.log("photo");
+console.log("photo taken");
 
 }
 
 
 
+
+
+
+
 window.onload=function(){
 
-    openCamera();
+openCamera();
 
 };
