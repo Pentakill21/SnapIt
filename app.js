@@ -1,9 +1,7 @@
-// SNAPIT APP.JS PART 1
-// Core app + navigation
+// SNAPIT APP.JS COMPLETE VERSION
 
 
 let currentFriend = "";
-
 
 let friends = [
     "Alex",
@@ -16,7 +14,6 @@ let friends = [
 let chats = {};
 
 
-
 friends.forEach(friend => {
 
     chats[friend] = [];
@@ -26,21 +23,17 @@ friends.forEach(friend => {
 
 
 
+// SCREEN CONTROL
 
 function hideScreens(){
 
-    document
-    .querySelectorAll("main")
-    .forEach(screen => {
+    document.querySelectorAll("main").forEach(screen=>{
 
         screen.classList.add("hidden");
 
     });
 
 }
-
-
-
 
 
 
@@ -56,9 +49,6 @@ function openCamera(){
 
 
 
-
-
-
 function openChatList(){
 
     hideScreens();
@@ -67,66 +57,25 @@ function openChatList(){
     .getElementById("chatScreen")
     .classList.remove("hidden");
 
-
     loadFriends();
 
 }
 
 
 
+function openSearch(){
 
+    hideScreens();
 
-
-
-function loadFriends(){
-
-
-    let list =
-    document.getElementById("friendList");
-
-
-    list.innerHTML = "";
-
-
-
-    friends.forEach(friend => {
-
-
-        let person =
-        document.createElement("div");
-
-
-        person.className = "friend";
-
-
-        person.innerText = friend;
-
-
-
-        person.onclick = function(){
-
-            openChat(friend);
-
-        };
-
-
-
-        list.appendChild(person);
-
-
-    });
-
+    document
+    .getElementById("searchScreen")
+    .classList.remove("hidden");
 
 }
 
 
 
-
-
-
-
 function openChat(friend){
-
 
     currentFriend = friend;
 
@@ -138,7 +87,6 @@ function openChat(friend){
     }
 
 
-
     hideScreens();
 
 
@@ -147,15 +95,53 @@ function openChat(friend){
     .classList.remove("hidden");
 
 
-
     document
     .getElementById("chatName")
     .innerText = friend;
 
 
-
     showMessages();
 
+}
+
+
+
+
+// FRIENDS
+
+function loadFriends(){
+
+    let list =
+    document.getElementById("friendList");
+
+
+    list.innerHTML = "";
+
+
+    friends.forEach(friend=>{
+
+
+        let button =
+        document.createElement("div");
+
+
+        button.className="friend";
+
+
+        button.innerText=friend;
+
+
+        button.onclick=function(){
+
+            openChat(friend);
+
+        };
+
+
+        list.appendChild(button);
+
+
+    });
 
 }
 
@@ -163,20 +149,23 @@ function openChat(friend){
 
 
 
+// MESSAGES
 
 
 function showMessages(){
-
 
     let box =
     document.getElementById("messages");
 
 
-    box.innerHTML = "";
+    box.innerHTML="";
+
+
+    if(!chats[currentFriend]) return;
 
 
 
-    chats[currentFriend].forEach(message => {
+    chats[currentFriend].forEach(message=>{
 
 
         let bubble =
@@ -203,46 +192,6 @@ function showMessages(){
 
 
 
-
-
-function openSearch(){
-
-    hideScreens();
-
-
-    document
-    .getElementById("searchScreen")
-    .classList.remove("hidden");
-
-
-}
-
-
-
-
-
-
-
-function takePhoto(){
-
-    console.log("Snap taken");
-
-}
-
-
-
-
-
-window.onload = function(){
-
-    openCamera();
-
-};
-// SNAPIT APP.JS PART 2
-// Messages + AI
-
-
-
 async function sendMessage(){
 
 
@@ -255,7 +204,7 @@ async function sendMessage(){
 
 
 
-    if(text === "") return;
+    if(text==="") return;
 
 
 
@@ -269,21 +218,21 @@ async function sendMessage(){
 
 
 
-    input.value = "";
+    input.value="";
 
 
     showMessages();
 
 
 
-    let aiReply =
+    let reply =
     await getAIReply(text);
 
 
 
     chats[currentFriend].push({
 
-        text:aiReply,
+        text:reply,
 
         type:"received"
 
@@ -302,9 +251,14 @@ async function sendMessage(){
 
 
 
+// AI CONNECTION TO SERVER
+
+
 async function getAIReply(message){
 
+
     try{
+
 
         let response =
         await fetch(
@@ -314,25 +268,31 @@ async function getAIReply(message){
             method:"POST",
 
             headers:{
+
                 "Content-Type":"application/json"
+
             },
 
 
             body:JSON.stringify({
 
-                message:message
+                message:message,
+
+                friend:currentFriend
 
             })
 
-
         });
+
 
 
         let data =
         await response.json();
 
 
-        return data.reply;
+
+        return data.reply ||
+        "No AI response";
 
 
     }
@@ -344,7 +304,7 @@ async function getAIReply(message){
         console.log(error);
 
 
-        return "My AI brain is offline 😴";
+        return "AI is offline right now 😴";
 
 
     }
@@ -352,95 +312,83 @@ async function getAIReply(message){
 
 }
 
-        let response =
-        await fetch(
-        "https://api.openai.com/v1/responses",
-        {
-
-            method:"POST",
-
-
-            headers:{
-
-                "Content-Type":"application/json",
-
-                "Authorization":
-                "Bearer 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"
-
-            },
-
-
-            body:JSON.stringify({
-
-                model:"gpt-4.1-mini",
-
-                input:message
-
-            })
-
-
-        });
 
 
 
-        let data =
-        await response.json();
-
-alert(JSON.stringify(data));
-
-        console.log(data);
 
 
-if(data.output_text){
-
-    return data.output_text;
-
-}
+// SEARCH
 
 
-if(data.output){
-
-    return data.output
-    .map(item =>
-        item.content
-        ?.map(part => part.text)
-        .join("")
-    )
-    .join("");
-
-}
+function searchPeople(){
 
 
-return "I didn't understand 😭";
+    let text =
+    document
+    .getElementById("searchBox")
+    .value
+    .trim();
+
+
+    let results =
+    document.getElementById("searchResults");
+
+
+    results.innerHTML="";
+
+
+    if(text==="") return;
 
 
 
-        return "I didn't understand 😭";
+    let person =
+    document.createElement("div");
 
 
-    }
+    person.className="friend";
 
 
- catch(error){
+    person.innerText =
+    "Add " + text;
 
 
-    alert(error);
+
+    person.onclick=function(){
 
 
-    return "Error shown above";
+        if(!friends.includes(text)){
+
+
+            friends.push(text);
+
+
+            chats[text]=[];
+
+
+        }
+
+
+        openChatList();
+
+
+    };
+
+
+    results.appendChild(person);
 
 
 }
 
 
-}
-// SNAPIT APP.JS PART 3
-// Profiles + Search + AI Personalities
 
+
+
+
+
+// PROFILE
 
 
 function openProfile(){
-
 
     hideScreens();
 
@@ -464,19 +412,11 @@ function openProfile(){
 
 
 
-
-
-
 function backToChat(){
-
 
     openChat(currentFriend);
 
-
 }
-
-
-
 
 
 
@@ -485,8 +425,7 @@ function unaddFriend(){
 
 
     friends =
-    friends.filter(friend=>friend !== currentFriend);
-
+    friends.filter(friend=>friend!==currentFriend);
 
 
     delete chats[currentFriend];
@@ -503,70 +442,9 @@ function unaddFriend(){
 
 
 
+function takePhoto(){
 
-
-
-function searchPeople(){
-
-
-    let search =
-    document
-    .getElementById("searchBox")
-    .value
-    .trim();
-
-
-
-    let results =
-    document.getElementById("searchResults");
-
-
-    results.innerHTML="";
-
-
-
-    if(search==="") return;
-
-
-
-    let result =
-    document.createElement("div");
-
-
-
-    result.className="friend";
-
-
-    result.innerText =
-    "Add " + search;
-
-
-
-    result.onclick=function(){
-
-
-        if(!friends.includes(search)){
-
-
-            friends.push(search);
-
-
-            chats[search]=[];
-
-
-        }
-
-
-
-        openChatList();
-
-
-    };
-
-
-
-    results.appendChild(result);
-
+    console.log("Snap!");
 
 }
 
@@ -574,54 +452,8 @@ function searchPeople(){
 
 
 
+window.onload=function(){
 
+    openCamera();
 
-function getPersonality(friend){
-
-
-    let personalities = {
-
-
-        Alex:
-        `
-        You are Alex.
-        You are the user's funny best friend.
-        Talk casually.
-        Use jokes sometimes.
-        Be natural and friendly.
-        `,
-
-
-        Sam:
-        `
-        You are Sam.
-        You are supportive and helpful.
-        Give thoughtful advice.
-        Talk like a close friend.
-        `,
-
-
-        Jordan:
-        `
-        You are Jordan.
-        You are energetic and competitive.
-        Talk like a gaming friend.
-        Keep things fun.
-        `,
-
-
-        Taylor:
-        `
-        You are Taylor.
-        You are positive and encouraging.
-        Hype the user up.
-        `
-
-
-    };
-
-
-    return personalities[friend] || personalities.Alex;
-
-
-}
+};
