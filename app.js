@@ -1082,3 +1082,43 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
 });
+function takePhoto(){
+
+    let video =
+    document.getElementById("cameraView");
+
+
+    if(!video) return;
+
+
+    console.log("Photo taken");
+
+}
+function openProfile(){
+
+    hideScreens();
+
+    let profile =
+    document.getElementById("profileScreen");
+
+
+    if(profile){
+
+        profile.classList.remove("hidden");
+
+    }
+
+
+
+    let name =
+    document.getElementById("profileFriendName");
+
+
+    if(name){
+
+        name.innerText = currentFriend;
+
+    }
+
+
+}
