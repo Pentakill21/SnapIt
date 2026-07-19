@@ -206,8 +206,7 @@ function showMessages(){
 
 
 
-
-function sendMessage(){
+async function sendMessage(){
 
 
     let input =
@@ -237,6 +236,130 @@ function sendMessage(){
 
 
     showMessages();
+
+
+
+    let replyBubble =
+    {
+
+        text:"typing...",
+
+        type:"received"
+
+    };
+
+
+    chats[currentFriend].push(replyBubble);
+
+
+    showMessages();
+
+
+
+    try{
+
+
+        let response =
+        await fetch(
+        "https://api.openai.com/v1/responses",
+        {
+
+            method:"POST",
+
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                "Authorization":
+                "Bearer YOUR_API_KEY"
+
+            },
+
+
+            body:JSON.stringify({
+
+
+                model:"gpt-4.1-mini",
+
+
+                instructions:
+                getPersonality(currentFriend),
+
+
+
+                input:
+                chats[currentFriend]
+                .map(message=>({
+
+                    role:
+                    message.type==="sent"
+                    ? "user"
+                    : "assistant",
+
+
+                    content:
+                    message.text
+
+                }))
+
+
+            })
+
+
+        });
+
+
+
+        let data =
+        await response.json();
+
+
+
+        chats[currentFriend]
+        .pop();
+
+
+
+        chats[currentFriend].push({
+
+            text:data.output_text,
+
+            type:"received"
+
+        });
+
+
+
+        showMessages();
+
+
+
+    }
+
+    catch(error){
+
+
+        chats[currentFriend]
+        .pop();
+
+
+        chats[currentFriend].push({
+
+            text:"My brain lagged 😭",
+
+            type:"received"
+
+        });
+
+
+        showMessages();
+
+
+        console.log(error);
+
+
+    }
 
 
 }
@@ -427,3 +550,57 @@ window.onload=function(){
 
 
 };
+function getPersonality(friend){
+
+
+    let personalities={
+
+
+        Alex:
+        `
+        You are Alex.
+        You are the user's funny best friend.
+        Text casually.
+        Joke around.
+        Remember details from the conversation.
+        Never say you are an AI.
+        `,
+
+
+        Sam:
+        `
+        You are Sam.
+        You are supportive and caring.
+        Give advice like a close friend.
+        Text naturally.
+        Never say you are an AI.
+        `,
+
+
+        Jordan:
+        `
+        You are Jordan.
+        You are energetic and competitive.
+        Talk like a gaming friend.
+        Be funny.
+        Never say you are an AI.
+        `,
+
+
+        Taylor:
+        `
+        You are Taylor.
+        You are positive and encouraging.
+        Hype the user up.
+        Talk naturally.
+        Never say you are an AI.
+        `
+
+
+    };
+
+
+    return personalities[friend] || personalities.Alex;
+
+
+}
