@@ -342,7 +342,7 @@ async function getAIReply(message){
         let data =
         await response.json();
 
-
+alert(JSON.stringify(data));
 
         console.log(data);
 
