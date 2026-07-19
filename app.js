@@ -433,3 +433,167 @@ function removeTyping(){
 
 
 }
+// SNAPIT AI APP.JS PART 3
+
+
+function addMessage(text,type){
+
+
+    let box =
+    document.getElementById("messages");
+
+
+    if(!box) return;
+
+
+
+    let bubble =
+    document.createElement("div");
+
+
+    bubble.className =
+    "bubble " + type;
+
+
+    bubble.innerText = text;
+
+
+
+    box.appendChild(bubble);
+
+
+
+    box.scrollTop =
+    box.scrollHeight;
+
+}
+
+
+
+
+
+function saveMemory(){
+
+
+    localStorage.setItem(
+
+        "snapitMemory",
+
+        JSON.stringify(conversationMemory)
+
+    );
+
+
+}
+
+
+
+
+
+function loadMemory(){
+
+
+    let saved =
+    localStorage.getItem(
+        "snapitMemory"
+    );
+
+
+    if(saved){
+
+        conversationMemory =
+        JSON.parse(saved);
+
+    }
+
+
+
+    friends.forEach(friend=>{
+
+
+        if(!conversationMemory[friend]){
+
+            conversationMemory[friend]=[];
+
+        }
+
+
+    });
+
+
+}
+
+
+
+
+
+function rememberFriend(friend){
+
+
+    if(!conversationMemory[friend]){
+
+        conversationMemory[friend]=[];
+
+    }
+
+
+}
+
+
+
+
+
+function clearChat(){
+
+
+    if(!currentFriend) return;
+
+
+
+    conversationMemory[currentFriend]=[];
+
+
+    saveMemory();
+
+
+    displayMessages();
+
+}
+
+
+
+
+
+function openSearch(){
+
+
+    hideScreens();
+
+
+    let search =
+    document.getElementById("searchScreen");
+
+
+    if(search){
+
+        search.classList.remove("hidden");
+
+    }
+
+
+}
+
+
+
+
+
+window.onload=function(){
+
+
+    loadMemory();
+
+
+    openCamera();
+
+
+};
