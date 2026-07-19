@@ -1,1 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SnapIt</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- CAMERA -->
+
+<main id="cameraScreen">
+
+
+<h1 class="title">SnapIt</h1>
+
+
+<video id="cameraView" autoplay playsinline></video>
+
+
+<button class="shutter" onclick="takePhoto()"></button>
+
+
+<nav class="bottomNav">
+
+<button onclick="openChatList()">
+💬
+</button>
+
+
+<button onclick="openCamera()">
+📷
+</button>
+
+
+<button onclick="openSearch()">
+🔍
+</button>
+
+
+</nav>
+
+
+</main>
+
+
+
+
+
+<!-- CHAT LIST -->
+
+
+<main id="chatScreen" class="hidden">
+
+
+<h1 class="title">
+Chats
+</h1>
+
+
+<div id="friendList"></div>
+
+
+</main>
+
+
+
+
+
+<!-- SEARCH -->
+
+
+<main id="searchScreen" class="hidden">
+
+
+<h1 class="title">
+Search
+</h1>
+
+
+<input 
+id="searchBox"
+placeholder="Search..."
+oninput="searchPeople()"
+>
+
+
+<div id="searchResults"></div>
+
+
+</main>
+
+
+
+
+
+<!-- CHAT -->
+
+
+<main id="messageScreen" class="hidden">
+
+
+<header class="chatHeader">
+
+
+<button onclick="openChatList()">
+←
+</button>
+
+
+<button onclick="openProfile()" class="friendNameButton">
+
+<span id="chatName">
+Friend
+</span>
+
+</button>
+
+
+</header>
+
+
+
+<div id="messages"></div>
+
+
+
+<form class="messageBar" onsubmit="sendMessage();return false;">
+
+
+<input 
+id="messageInput"
+placeholder="Message..."
+>
+
+
+<button>
+➤
+</button>
+
+
+</form>
+
+
+</main>
+
+
+
+
+
+<!-- PROFILE -->
+
+
+<main id="profileScreen" class="hidden">
+
+
+<header class="profileHeader">
+
+
+<button onclick="backToChat()">
+←
+</button>
+
+
+<h1 id="profileName">
+Profile
+</h1>
+
+
+</header>
+
+
+<div class="profileCard">
+
+<h2 id="profileFriendName">
+Friend
+</h2>
+
+
+<p>⭐ SnapIt member</p>
+
+<p>🔥 Streak</p>
+
+<p>💬 Messages</p>
+
+
+</div>
+
+
+<button onclick="unaddFriend()" class="unaddButton">
+UNADD FRIEND
+</button>
+
+
+</main>
+
+
+
+</div>
+
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
