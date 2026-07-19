@@ -347,16 +347,27 @@ async function getAIReply(message){
         console.log(data);
 
 
+if(data.output_text){
 
-        if(data.output && data.output[0]){
+    return data.output_text;
 
-
-            return data.output[0]
-            .content[0]
-            .text;
+}
 
 
-        }
+if(data.output){
+
+    return data.output
+    .map(item =>
+        item.content
+        ?.map(part => part.text)
+        .join("")
+    )
+    .join("");
+
+}
+
+
+return "I didn't understand 😭";
 
 
 
