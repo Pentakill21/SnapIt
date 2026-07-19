@@ -217,3 +217,219 @@ function displayMessages(){
 
 
 }
+// SNAPIT AI APP.JS PART 2
+
+
+
+async function sendMessage(){
+
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    if(!input) return;
+
+
+
+    let text =
+    input.value.trim();
+
+
+
+    if(text==="") return;
+
+
+
+    addMessage(text,"sent");
+
+
+
+    conversationMemory[currentFriend].push({
+
+        text:text,
+
+        type:"sent"
+
+    });
+
+
+
+    input.value="";
+
+
+
+    showTyping();
+
+
+
+    try{
+
+
+        let response =
+        await fetch(
+            "https://api.openai.com/v1/responses",
+            {
+
+                method:"POST",
+
+
+                headers:{
+
+                    "Content-Type":"application/json",
+
+                    "Authorization":
+                    "Bearer YOUR_API_KEY_HERE"
+
+                },
+
+
+                body:JSON.stringify({
+
+                    model:"gpt-4.1-mini",
+
+
+                    instructions:
+
+                    personalities[currentFriend]
+                    +
+                    `
+                    You are texting inside SnapIt.
+                    Never say you are an AI.
+                    Keep replies natural like a real friend.
+                    Remember the conversation.
+                    Use casual texting style.
+                    `,
+
+
+                    input:
+                    conversationMemory[currentFriend]
+                    .map(message=>({
+
+                        role:
+                        message.type==="sent"
+                        ? "user"
+                        : "assistant",
+
+
+                        content:
+                        message.text
+
+                    }))
+
+
+                })
+
+            }
+
+        );
+
+
+
+        let data =
+        await response.json();
+
+
+
+        removeTyping();
+
+
+
+        let reply =
+        data.output_text;
+
+
+
+        addMessage(
+            reply,
+            "received"
+        );
+
+
+
+        conversationMemory[currentFriend].push({
+
+            text:reply,
+
+            type:"received"
+
+        });
+
+
+
+    }
+
+
+    catch(error){
+
+
+        removeTyping();
+
+
+        addMessage(
+            "My brain glitched 😭 try again",
+            "received"
+        );
+
+
+        console.log(error);
+
+
+    }
+
+
+}
+
+
+
+
+
+function showTyping(){
+
+
+    let box =
+    document.getElementById("messages");
+
+
+    if(!box) return;
+
+
+
+    let typing =
+    document.createElement("div");
+
+
+    typing.id="typing";
+
+
+    typing.className="bubble received";
+
+
+    typing.innerText="typing...";
+
+
+
+    box.appendChild(typing);
+
+
+}
+
+
+
+
+
+function removeTyping(){
+
+
+    let typing =
+    document.getElementById("typing");
+
+
+    if(typing){
+
+        typing.remove();
+
+    }
+
+
+}
