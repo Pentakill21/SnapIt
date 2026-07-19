@@ -314,7 +314,7 @@ async function sendMessage(){
         let data =
         await response.json();
 
-
+console.log(data);
 
         chats[currentFriend]
         .pop();
