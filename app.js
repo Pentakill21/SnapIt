@@ -321,9 +321,16 @@ console.log(data);
 
 
 
-      let aiReply =
-data.output?.[0]?.content?.[0]?.text
-|| "I didn't get that 😭";
+     let aiReply = "AI response received";
+
+if(data.output){
+
+    aiReply =
+    data.output[0]
+    .content[0]
+    .text;
+
+}
 
 
 chats[currentFriend].push({
