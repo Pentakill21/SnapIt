@@ -238,3 +238,144 @@ window.onload = function(){
     openCamera();
 
 };
+// SNAPIT APP.JS PART 2
+// Messages + AI
+
+
+
+async function sendMessage(){
+
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    let text =
+    input.value.trim();
+
+
+
+    if(text === "") return;
+
+
+
+    chats[currentFriend].push({
+
+        text:text,
+
+        type:"sent"
+
+    });
+
+
+
+    input.value = "";
+
+
+    showMessages();
+
+
+
+    let aiReply =
+    await getAIReply(text);
+
+
+
+    chats[currentFriend].push({
+
+        text:aiReply,
+
+        type:"received"
+
+    });
+
+
+
+    showMessages();
+
+
+}
+
+
+
+
+
+
+
+async function getAIReply(message){
+
+
+    try{
+
+
+        let response =
+        await fetch(
+        "https://api.openai.com/v1/responses",
+        {
+
+            method:"POST",
+
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                "Authorization":
+                "Bearer YOUR_API_KEY"
+
+            },
+
+
+            body:JSON.stringify({
+
+                model:"gpt-4.1-mini",
+
+                input:message
+
+            })
+
+
+        });
+
+
+
+        let data =
+        await response.json();
+
+
+
+        console.log(data);
+
+
+
+        if(data.output && data.output[0]){
+
+
+            return data.output[0]
+            .content[0]
+            .text;
+
+
+        }
+
+
+
+        return "I didn't understand 😭";
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(error);
+
+
+        return "My AI brain is sleeping 😴";
+
+
+    }
+
+
+}
