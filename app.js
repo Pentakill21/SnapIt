@@ -304,9 +304,53 @@ async function sendMessage(){
 
 async function getAIReply(message){
 
-
     try{
 
+        let response =
+        await fetch(
+        "http://localhost:3000/chat",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+
+            body:JSON.stringify({
+
+                message:message
+
+            })
+
+
+        });
+
+
+        let data =
+        await response.json();
+
+
+        return data.reply;
+
+
+    }
+
+
+    catch(error){
+
+
+        console.log(error);
+
+
+        return "My AI brain is offline 😴";
+
+
+    }
+
+
+}
 
         let response =
         await fetch(
