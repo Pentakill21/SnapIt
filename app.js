@@ -321,14 +321,18 @@ async function sendMessage(){
 
 
 
-        chats[currentFriend].push({
+      let aiReply =
+data.output?.[0]?.content?.[0]?.text
+|| "I didn't get that 😭";
 
-            text:data.output_text,
 
-            type:"received"
+chats[currentFriend].push({
 
-        });
+    text: aiReply,
 
+    type:"received"
+
+});
 
 
         showMessages();
