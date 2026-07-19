@@ -1008,3 +1008,77 @@ async function(){
 
 
 loadProfiles();
+// SNAPIT BUTTON CONNECTIONS
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+
+    let cameraBtn =
+    document.getElementById("cameraButton");
+
+    if(cameraBtn){
+
+        cameraBtn.onclick = openCamera;
+
+    }
+
+
+
+    let chatBtn =
+    document.getElementById("chatButton");
+
+    if(chatBtn){
+
+        chatBtn.onclick = openChatList;
+
+    }
+
+
+
+    let searchBtn =
+    document.getElementById("searchButton");
+
+    if(searchBtn){
+
+        searchBtn.onclick = openSearch;
+
+    }
+
+
+
+    let sendBtn =
+    document.getElementById("sendButton");
+
+    if(sendBtn){
+
+        sendBtn.onclick = sendMessage;
+
+    }
+
+
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    if(input){
+
+        input.addEventListener(
+            "keydown",
+            function(e){
+
+                if(e.key==="Enter"){
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+    }
+
+
+
+});
