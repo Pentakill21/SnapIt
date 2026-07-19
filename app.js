@@ -771,3 +771,240 @@ function backToChat(){
 
 
 }
+// SNAPIT AI APP.JS PART 5
+// HUMAN MEMORY SYSTEM
+
+
+
+let friendProfiles = {
+
+
+    Alex:{
+
+        personality:
+        "funny best friend, jokes around, uses casual texting",
+
+        likes:
+        [],
+
+        facts:
+        []
+
+    },
+
+
+    Sam:{
+
+        personality:
+        "supportive friend, listens and gives advice",
+
+        likes:
+        [],
+
+        facts:
+        []
+
+    },
+
+
+    Jordan:{
+
+        personality:
+        "competitive gamer friend, energetic and funny",
+
+        likes:
+        [],
+
+        facts:
+        []
+
+    },
+
+
+    Taylor:{
+
+        personality:
+        "positive hype friend, excited and encouraging",
+
+        likes:
+        [],
+
+        facts:
+        []
+
+    }
+
+
+};
+
+
+
+
+
+
+
+function rememberFact(friend,message){
+
+
+    if(!friendProfiles[friend]) return;
+
+
+
+    let lower =
+    message.toLowerCase();
+
+
+
+    let triggers = [
+
+
+        "my name is",
+
+        "i like",
+
+        "i love",
+
+        "my favorite",
+
+        "i hate",
+
+        "my birthday",
+
+        "my dog",
+
+        "my cat"
+
+
+    ];
+
+
+
+    triggers.forEach(trigger=>{
+
+
+        if(lower.includes(trigger)){
+
+
+            friendProfiles[friend]
+            .facts
+            .push(message);
+
+
+        }
+
+
+    });
+
+
+
+    localStorage.setItem(
+
+        "snapitProfiles",
+
+        JSON.stringify(friendProfiles)
+
+    );
+
+
+}
+
+
+
+
+
+
+
+function loadProfiles(){
+
+
+    let saved =
+    localStorage.getItem(
+        "snapitProfiles"
+    );
+
+
+
+    if(saved){
+
+        friendProfiles =
+        JSON.parse(saved);
+
+    }
+
+
+}
+
+
+
+
+
+
+
+function getFriendContext(friend){
+
+
+    let profile =
+    friendProfiles[friend];
+
+
+
+    if(!profile) return "";
+
+
+
+    return `
+
+You are ${friend}.
+
+Your personality:
+${profile.personality}
+
+Things you remember about the user:
+${profile.facts.join(", ")}
+
+Talk naturally like a real texting friend.
+
+`;
+
+}
+
+
+
+
+
+let oldSendMessage =
+sendMessage;
+
+
+
+sendMessage =
+async function(){
+
+
+    let input =
+    document.getElementById("messageInput");
+
+
+    if(input){
+
+        rememberFact(
+            currentFriend,
+            input.value
+        );
+
+    }
+
+
+    saveMemory();
+
+
+    return oldSendMessage();
+
+
+};
+
+
+
+
+
+loadProfiles();
