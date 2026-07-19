@@ -1,4 +1,5 @@
-// SNAPIT APP.JS CLEAN FOUNDATION
+// SNAPIT APP.JS PART 1
+// Core app + navigation
 
 
 let currentFriend = "";
@@ -17,7 +18,9 @@ let chats = {};
 
 
 friends.forEach(friend => {
+
     chats[friend] = [];
+
 });
 
 
@@ -26,7 +29,9 @@ friends.forEach(friend => {
 
 function hideScreens(){
 
-    document.querySelectorAll("main").forEach(screen=>{
+    document
+    .querySelectorAll("main")
+    .forEach(screen => {
 
         screen.classList.add("hidden");
 
@@ -62,6 +67,7 @@ function openChatList(){
     .getElementById("chatScreen")
     .classList.remove("hidden");
 
+
     loadFriends();
 
 }
@@ -71,42 +77,48 @@ function openChatList(){
 
 
 
+
 function loadFriends(){
+
 
     let list =
     document.getElementById("friendList");
 
 
-    list.innerHTML="";
+    list.innerHTML = "";
 
 
-    friends.forEach(friend=>{
+
+    friends.forEach(friend => {
 
 
-        let item =
+        let person =
         document.createElement("div");
 
 
-        item.className="friend";
+        person.className = "friend";
 
 
-        item.innerText=friend;
+        person.innerText = friend;
 
 
-        item.onclick=function(){
+
+        person.onclick = function(){
 
             openChat(friend);
 
         };
 
 
-        list.appendChild(item);
+
+        list.appendChild(person);
 
 
     });
 
 
 }
+
 
 
 
@@ -121,9 +133,10 @@ function openChat(friend){
 
     if(!chats[friend]){
 
-        chats[friend]=[];
+        chats[friend] = [];
 
     }
+
 
 
     hideScreens();
@@ -134,9 +147,11 @@ function openChat(friend){
     .classList.remove("hidden");
 
 
+
     document
     .getElementById("chatName")
     .innerText = friend;
+
 
 
     showMessages();
@@ -157,10 +172,11 @@ function showMessages(){
     document.getElementById("messages");
 
 
-    box.innerHTML="";
+    box.innerHTML = "";
 
 
-    chats[currentFriend].forEach(message=>{
+
+    chats[currentFriend].forEach(message => {
 
 
         let bubble =
@@ -189,46 +205,6 @@ function showMessages(){
 
 
 
-function sendMessage(){
-
-
-    let input =
-    document.getElementById("messageInput");
-
-
-    let text =
-    input.value.trim();
-
-
-
-    if(text==="") return;
-
-
-
-    chats[currentFriend].push({
-
-        text:text,
-
-        type:"sent"
-
-    });
-
-
-
-    input.value="";
-
-
-    showMessages();
-
-
-}
-
-
-
-
-
-
-
 function openSearch(){
 
     hideScreens();
@@ -237,126 +213,6 @@ function openSearch(){
     document
     .getElementById("searchScreen")
     .classList.remove("hidden");
-
-}
-
-
-
-
-
-
-function searchPeople(){
-
-
-    let text =
-    document
-    .getElementById("searchBox")
-    .value
-    .trim();
-
-
-    let results =
-    document.getElementById("searchResults");
-
-
-    results.innerHTML="";
-
-
-    if(text==="") return;
-
-
-
-    let person =
-    document.createElement("div");
-
-
-    person.innerText =
-    "Add " + text;
-
-
-
-    person.onclick=function(){
-
-
-        if(!friends.includes(text)){
-
-            friends.push(text);
-
-            chats[text]=[];
-
-        }
-
-
-        openChatList();
-
-
-    };
-
-
-    results.appendChild(person);
-
-
-}
-
-
-
-
-
-
-function openProfile(){
-
-
-    hideScreens();
-
-
-    document
-    .getElementById("profileScreen")
-    .classList.remove("hidden");
-
-
-    document
-    .getElementById("profileName")
-    .innerText=currentFriend;
-
-
-    document
-    .getElementById("profileFriendName")
-    .innerText=currentFriend;
-
-
-}
-
-
-
-
-
-
-
-function backToChat(){
-
-    openChat(currentFriend);
-
-}
-
-
-
-
-
-
-function unaddFriend(){
-
-
-    friends =
-    friends.filter(friend=>friend!==currentFriend);
-
-
-    delete chats[currentFriend];
-
-
-    currentFriend="";
-
-
-    openChatList();
 
 
 }
@@ -369,7 +225,7 @@ function unaddFriend(){
 
 function takePhoto(){
 
-    console.log("Snap!");
+    console.log("Snap taken");
 
 }
 
@@ -377,7 +233,7 @@ function takePhoto(){
 
 
 
-window.onload=function(){
+window.onload = function(){
 
     openCamera();
 
