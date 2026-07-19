@@ -1,1 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SnapIt</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- CAMERA -->
+
+<main id="cameraScreen">
+
+
+<h1 class="title">
+SnapIt
+</h1>
+
+
+<video id="cameraView" autoplay playsinline></video>
+
+
+<button class="shutter" onclick="takePhoto()"></button>
+
+
+</main>
+
+
+
+
+
+<!-- CHAT LIST -->
+
+<main id="chatScreen" class="hidden">
+
+
+<h1 class="title">
+Chats
+</h1>
+
+
+<div id="friendList"></div>
+
+
+</main>
+
+
+
+
+
+<!-- SEARCH -->
+
+<main id="searchScreen" class="hidden">
+
+
+<h1 class="title">
+Search
+</h1>
+
+
+<input
+id="searchBox"
+placeholder="Search people..."
+oninput="searchPeople()"
+>
+
+
+<div id="searchResults"></div>
+
+
+</main>
+
+
+
+
+
+<!-- MESSAGE CHAT -->
+
+<main id="messageScreen" class="hidden">
+
+
+<header class="chatHeader">
+
+
+<button onclick="openChatList()">
+←
+</button>
+
+
+<button class="friendNameButton" onclick="openProfile()">
+
+<span id="chatName">
+Friend
+</span>
+
+</button>
+
+
+</header>
+
+
+<div id="messages"></div>
+
+
+
+<form class="messageBar" onsubmit="sendMessage();return false;">
+
+
+<input
+id="messageInput"
+placeholder="Message..."
+>
+
+
+<button>
+➤
+</button>
+
+
+</form>
+
+
+</main>
+
+
+
+
+
+<!-- PROFILE -->
+
+<main id="profileScreen" class="hidden">
+
+
+<header class="profileHeader">
+
+
+<button onclick="backToChat()">
+←
+</button>
+
+
+<h1 id="profileName">
+Profile
+</h1>
+
+
+</header>
+
+
+
+<div class="profileCard">
+
+
+<h2 id="profileFriendName">
+Friend
+</h2>
+
+
+<p>⭐ SnapIt member</p>
+
+<p>🔥 Streak</p>
+
+<p>💬 Messages</p>
+
+
+</div>
+
+
+
+<button class="unaddButton" onclick="unaddFriend()">
+UNADD FRIEND
+</button>
+
+
+</main>
+
+
+
+
+
+<!-- PERMANENT BOTTOM NAV -->
+
+<nav class="bottomNav">
+
+
+<button onclick="openChatList()" aria-label="Chats">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M4 5h16v12H8l-4 4V5z"/>
+
+</svg>
+
+</button>
+
+
+
+
+
+<button onclick="openCamera()" aria-label="Camera">
+
+<svg viewBox="0 0 24 24">
+
+<rect x="4" y="6" width="16" height="14" rx="3"/>
+
+<circle cx="12" cy="13" r="4"/>
+
+<path d="M8 6l2-3h4l2 3"/>
+
+</svg>
+
+</button>
+
+
+
+
+
+<button onclick="openSearch()" aria-label="Search">
+
+<svg viewBox="0 0 24 24">
+
+<circle cx="10" cy="10" r="6"/>
+
+<line x1="14.5" y1="14.5" x2="21" y2="21"/>
+
+</svg>
+
+</button>
+
+
+
+</nav>
+
+
+
+</div>
+
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
