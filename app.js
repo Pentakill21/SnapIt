@@ -321,7 +321,7 @@ async function getAIReply(message){
                 "Content-Type":"application/json",
 
                 "Authorization":
-                "Bearer YOUR_API_KEY"
+                "Bearer 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"
 
             },
 
