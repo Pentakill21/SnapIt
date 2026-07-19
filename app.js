@@ -377,16 +377,16 @@ return "I didn't understand 😭";
     }
 
 
-    catch(error){
+ catch(error){
 
 
-        console.log(error);
+    alert(error);
 
 
-        return "My AI brain is sleeping 😴";
+    return "Error shown above";
 
 
-    }
+}
 
 
 }
