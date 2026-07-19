@@ -379,3 +379,194 @@ async function getAIReply(message){
 
 
 }
+// SNAPIT APP.JS PART 3
+// Profiles + Search + AI Personalities
+
+
+
+function openProfile(){
+
+
+    hideScreens();
+
+
+    document
+    .getElementById("profileScreen")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("profileName")
+    .innerText=currentFriend;
+
+
+    document
+    .getElementById("profileFriendName")
+    .innerText=currentFriend;
+
+
+}
+
+
+
+
+
+
+function backToChat(){
+
+
+    openChat(currentFriend);
+
+
+}
+
+
+
+
+
+
+
+function unaddFriend(){
+
+
+    friends =
+    friends.filter(friend=>friend !== currentFriend);
+
+
+
+    delete chats[currentFriend];
+
+
+    currentFriend="";
+
+
+    openChatList();
+
+
+}
+
+
+
+
+
+
+
+function searchPeople(){
+
+
+    let search =
+    document
+    .getElementById("searchBox")
+    .value
+    .trim();
+
+
+
+    let results =
+    document.getElementById("searchResults");
+
+
+    results.innerHTML="";
+
+
+
+    if(search==="") return;
+
+
+
+    let result =
+    document.createElement("div");
+
+
+
+    result.className="friend";
+
+
+    result.innerText =
+    "Add " + search;
+
+
+
+    result.onclick=function(){
+
+
+        if(!friends.includes(search)){
+
+
+            friends.push(search);
+
+
+            chats[search]=[];
+
+
+        }
+
+
+
+        openChatList();
+
+
+    };
+
+
+
+    results.appendChild(result);
+
+
+}
+
+
+
+
+
+
+
+function getPersonality(friend){
+
+
+    let personalities = {
+
+
+        Alex:
+        `
+        You are Alex.
+        You are the user's funny best friend.
+        Talk casually.
+        Use jokes sometimes.
+        Be natural and friendly.
+        `,
+
+
+        Sam:
+        `
+        You are Sam.
+        You are supportive and helpful.
+        Give thoughtful advice.
+        Talk like a close friend.
+        `,
+
+
+        Jordan:
+        `
+        You are Jordan.
+        You are energetic and competitive.
+        Talk like a gaming friend.
+        Keep things fun.
+        `,
+
+
+        Taylor:
+        `
+        You are Taylor.
+        You are positive and encouraging.
+        Hype the user up.
+        `
+
+
+    };
+
+
+    return personalities[friend] || personalities.Alex;
+
+
+}
