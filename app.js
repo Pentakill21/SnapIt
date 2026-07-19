@@ -597,3 +597,177 @@ window.onload=function(){
 
 
 };
+// SNAPIT AI APP.JS PART 4
+
+
+function addFriend(name){
+
+    if(!name) return;
+
+
+    if(!friends.includes(name)){
+
+        friends.push(name);
+
+        conversationMemory[name]=[];
+
+        saveMemory();
+
+    }
+
+
+    loadFriends();
+
+}
+
+
+
+
+
+function removeFriend(name){
+
+
+    let check =
+    confirm(
+        "Unadd " + name + "?"
+    );
+
+
+    if(!check) return;
+
+
+
+    friends =
+    friends.filter(friend=>friend!==name);
+
+
+
+    delete conversationMemory[name];
+
+
+    saveMemory();
+
+
+    loadFriends();
+
+
+    openChatList();
+
+}
+
+
+
+
+
+function searchPeople(){
+
+
+    let input =
+    document.getElementById("searchBox");
+
+
+    let results =
+    document.getElementById("searchResults");
+
+
+    if(!input || !results) return;
+
+
+
+    let name =
+    input.value.trim();
+
+
+
+    results.innerHTML="";
+
+
+
+    if(name.length===0) return;
+
+
+
+    let button =
+    document.createElement("button");
+
+
+    button.innerText =
+    "Add " + name;
+
+
+
+    button.onclick=function(){
+
+
+        addFriend(name);
+
+
+        results.innerHTML =
+        "Added " + name;
+
+
+    };
+
+
+
+    results.appendChild(button);
+
+
+}
+
+
+
+
+
+function openProfile(friend){
+
+
+    currentFriend = friend;
+
+
+
+    hideScreens();
+
+
+
+    let profile =
+    document.getElementById("profileScreen");
+
+
+
+    if(profile){
+
+        profile.classList.remove("hidden");
+
+    }
+
+
+
+    let title =
+    document.getElementById("profileName");
+
+
+    if(title){
+
+        title.innerText=friend;
+
+    }
+
+
+}
+
+
+
+
+
+function backToChat(){
+
+
+    if(currentFriend){
+
+        openChat(currentFriend);
+
+    }
+
+
+}
