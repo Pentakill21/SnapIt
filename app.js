@@ -1,7 +1,9 @@
-// SNAPIT APP.JS COMPLETE VERSION
+// SNAPIT APP.JS FULL REBUILD
+// PART 1 - FOUNDATION + NAVIGATION
 
 
 let currentFriend = "";
+
 
 let friends = [
     "Alex",
@@ -23,11 +25,14 @@ friends.forEach(friend => {
 
 
 
+
 // SCREEN CONTROL
 
 function hideScreens(){
 
-    document.querySelectorAll("main").forEach(screen=>{
+    document
+    .querySelectorAll("main")
+    .forEach(screen => {
 
         screen.classList.add("hidden");
 
@@ -37,9 +42,13 @@ function hideScreens(){
 
 
 
+
+
+
 function openCamera(){
 
     hideScreens();
+
 
     document
     .getElementById("cameraScreen")
@@ -49,13 +58,19 @@ function openCamera(){
 
 
 
+
+
+
+
 function openChatList(){
 
     hideScreens();
 
+
     document
     .getElementById("chatScreen")
     .classList.remove("hidden");
+
 
     loadFriends();
 
@@ -63,9 +78,14 @@ function openChatList(){
 
 
 
+
+
+
+
 function openSearch(){
 
     hideScreens();
+
 
     document
     .getElementById("searchScreen")
@@ -75,9 +95,15 @@ function openSearch(){
 
 
 
+
+
+
+
 function openChat(friend){
 
+
     currentFriend = friend;
+
 
 
     if(!chats[friend]){
@@ -87,7 +113,10 @@ function openChat(friend){
     }
 
 
+
+
     hideScreens();
+
 
 
     document
@@ -95,53 +124,85 @@ function openChat(friend){
     .classList.remove("hidden");
 
 
+
+
     document
     .getElementById("chatName")
     .innerText = friend;
 
 
+
     showMessages();
+
 
 }
 
 
 
 
-// FRIENDS
+
+
+function takePhoto(){
+
+    console.log("Snap taken");
+
+}
+
+
+
+
+
+
+window.onload = function(){
+
+    openCamera();
+
+};
+// PART 2 - CHAT SYSTEM
+
+
 
 function loadFriends(){
+
 
     let list =
     document.getElementById("friendList");
 
 
+    if(!list) return;
+
+
     list.innerHTML = "";
+
 
 
     friends.forEach(friend=>{
 
 
-        let button =
+        let item =
         document.createElement("div");
 
 
-        button.className="friend";
+        item.className = "friend";
 
 
-        button.innerText=friend;
+        item.innerText = friend;
 
 
-        button.onclick=function(){
+
+        item.onclick = function(){
 
             openChat(friend);
 
         };
 
 
-        list.appendChild(button);
+
+        list.appendChild(item);
 
 
     });
+
 
 }
 
@@ -149,19 +210,20 @@ function loadFriends(){
 
 
 
-// MESSAGES
 
 
 function showMessages(){
+
 
     let box =
     document.getElementById("messages");
 
 
-    box.innerHTML="";
+    if(!box) return;
 
 
-    if(!chats[currentFriend]) return;
+
+    box.innerHTML = "";
 
 
 
@@ -172,21 +234,52 @@ function showMessages(){
         document.createElement("div");
 
 
+
         bubble.className =
         "bubble " + message.type;
 
 
-        bubble.innerText =
+
+        let text =
+        document.createElement("div");
+
+
+        text.innerText =
         message.text;
+
+
+
+        let time =
+        document.createElement("div");
+
+
+        time.className =
+        "time";
+
+
+        time.innerText =
+        message.time || "";
+
+
+
+        bubble.appendChild(text);
+
+
+        bubble.appendChild(time);
+
 
 
         box.appendChild(bubble);
 
 
+
     });
 
 
+
 }
+
+
 
 
 
@@ -195,8 +288,10 @@ function showMessages(){
 async function sendMessage(){
 
 
+
     let input =
     document.getElementById("messageInput");
+
 
 
     let text =
@@ -204,7 +299,8 @@ async function sendMessage(){
 
 
 
-    if(text==="") return;
+    if(text === "") return;
+
 
 
 
@@ -212,16 +308,23 @@ async function sendMessage(){
 
         text:text,
 
-        type:"sent"
+        type:"sent",
+
+        time:getTime()
 
     });
 
 
 
-    input.value="";
+    input.value = "";
+
 
 
     showMessages();
+
+
+
+    showTyping();
 
 
 
@@ -230,17 +333,25 @@ async function sendMessage(){
 
 
 
+    hideTyping();
+
+
+
+
     chats[currentFriend].push({
 
         text:reply,
 
-        type:"received"
+        type:"received",
+
+        time:getTime()
 
     });
 
 
 
     showMessages();
+
 
 
 }
@@ -251,7 +362,71 @@ async function sendMessage(){
 
 
 
-// AI CONNECTION TO SERVER
+function getTime(){
+
+
+    return new Date()
+    .toLocaleTimeString([],{
+
+        hour:"2-digit",
+
+        minute:"2-digit"
+
+    });
+
+
+}
+
+
+
+
+
+
+
+function showTyping(){
+
+
+    let typing =
+    document.getElementById("typingIndicator");
+
+
+
+    if(typing){
+
+        typing.classList.remove("hidden");
+
+        typing.innerText =
+        currentFriend + " is typing...";
+
+    }
+
+
+}
+
+
+
+
+
+
+
+function hideTyping(){
+
+
+    let typing =
+    document.getElementById("typingIndicator");
+
+
+
+    if(typing){
+
+        typing.classList.add("hidden");
+
+    }
+
+
+}
+// PART 3 - AI + SEARCH + PROFILES
+
 
 
 async function getAIReply(message){
@@ -261,26 +436,32 @@ async function getAIReply(message){
 
 
         let response =
-        await fetch(
-        "http://localhost:3000/chat",
-        {
+        await fetch("/chat", {
+
 
             method:"POST",
 
+
             headers:{
 
+
                 "Content-Type":"application/json"
+
 
             },
 
 
             body:JSON.stringify({
 
+
                 message:message,
+
 
                 friend:currentFriend
 
+
             })
+
 
         });
 
@@ -293,6 +474,7 @@ async function getAIReply(message){
 
         return data.reply ||
         "No AI response";
+
 
 
     }
@@ -317,27 +499,33 @@ async function getAIReply(message){
 
 
 
-// SEARCH
-
 
 function searchPeople(){
 
 
-    let text =
+    let search =
     document
     .getElementById("searchBox")
     .value
     .trim();
 
 
+
     let results =
     document.getElementById("searchResults");
+
+
+
+    if(!results) return;
+
 
 
     results.innerHTML="";
 
 
-    if(text==="") return;
+
+    if(search==="") return;
+
 
 
 
@@ -349,32 +537,38 @@ function searchPeople(){
 
 
     person.innerText =
-    "Add " + text;
+    "Add " + search;
+
 
 
 
     person.onclick=function(){
 
 
-        if(!friends.includes(text)){
+
+        if(!friends.includes(search)){
 
 
-            friends.push(text);
+            friends.push(search);
 
 
-            chats[text]=[];
+            chats[search]=[];
 
 
         }
 
 
+
         openChatList();
+
 
 
     };
 
 
+
     results.appendChild(person);
+
 
 
 }
@@ -384,39 +578,64 @@ function searchPeople(){
 
 
 
-
-// PROFILE
 
 
 function openProfile(){
 
+
+
     hideScreens();
 
 
-    document
-    .getElementById("profileScreen")
-    .classList.remove("hidden");
+
+    let profile =
+    document.getElementById("profileScreen");
 
 
-    document
-    .getElementById("profileName")
-    .innerText=currentFriend;
+
+    if(profile){
 
 
-    document
-    .getElementById("profileFriendName")
-    .innerText=currentFriend;
+        profile.classList.remove("hidden");
+
+
+    }
+
+
+
+
+    let name =
+    document.getElementById("profileFriendName");
+
+
+
+    if(name){
+
+
+        name.innerText=currentFriend;
+
+
+    }
 
 
 }
+
+
+
+
 
 
 
 function backToChat(){
 
+
     openChat(currentFriend);
 
+
 }
+
+
+
 
 
 
@@ -424,27 +643,23 @@ function backToChat(){
 function unaddFriend(){
 
 
+
     friends =
-    friends.filter(friend=>friend!==currentFriend);
+    friends.filter(friend=>friend !== currentFriend);
+
 
 
     delete chats[currentFriend];
 
 
+
     currentFriend="";
+
 
 
     openChatList();
 
 
-}
-
-
-
-
-function takePhoto(){
-
-    console.log("Snap!");
 
 }
 
@@ -452,8 +667,36 @@ function takePhoto(){
 
 
 
-window.onload=function(){
 
-    openCamera();
 
-};
+function getPersonality(friend){
+
+
+
+    let personalities = {
+
+
+        Alex:
+        "Funny best friend who jokes around.",
+
+
+        Sam:
+        "Supportive friend who gives advice.",
+
+
+        Jordan:
+        "Competitive gaming friend.",
+
+
+        Taylor:
+        "Positive friend who hypes you up."
+
+    };
+
+
+
+    return personalities[friend] ||
+    personalities.Alex;
+
+
+}
